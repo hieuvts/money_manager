@@ -14,7 +14,9 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text("Money Management"),
       ),
       body: Center(
-        child: Text("Home page"),
+        child: Stack(children: <Widget>[
+          Text("Home page"),
+        ]),
       ),
     );
   }
