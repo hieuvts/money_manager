@@ -11,6 +11,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.red[350],
       appBar: AppBar(
         title: Text("Money Management"),
       ),
@@ -61,24 +62,20 @@ class _HomeScreenState extends State<HomeScreen> {
       //           ),
       //         ])),
       bottomNavigationBar: ConvexAppBar(
-        backgroundColor: Colors.grey,
-        style: TabStyle.textIn,
+        backgroundColor: Colors.blue[310],
+        style: TabStyle.react,
         items: [
           TabItem(
-              icon: new Image.asset('images/blackWhite/transaction.png'),
+              icon: new Image.asset('images/transaction.png'),
               title: 'Giao dịch'),
-          TabItem(
-              icon: new Image.asset('images/blackWhite/add.png'),
-              title: 'Thống kê'),
-          TabItem(
-              icon: new Image.asset('images/blackWhite/add.png'), title: 'Tạo'),
+          TabItem(icon: new Image.asset('images/graph.png'), title: 'Thống kê'),
+          TabItem(icon: new Image.asset('images/add.png'), title: 'Tạo'),
           //TabItem(icon: Icons.message, title: 'ABC'),
           TabItem(
-              icon: new Image.asset('images/blackWhite/setting.png'),
-              title: 'Cài đặt'),
+              icon: new Image.asset('images/settings.png'), title: 'Cài đặt'),
         ],
         initialActiveIndex: 2, //optional, default as 0
-        onTap: (int i) => print('click index=$i'),
+        //onTap: (int i) => print('click index=$i'),
       ),
     );
   }
