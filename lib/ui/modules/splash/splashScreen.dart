@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_manager/ui/home/homeScreen.dart';
+import 'package:money_manager/ui/modules/page/homeScreen.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 class MySplashScreen extends StatefulWidget {
