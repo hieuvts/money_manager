@@ -13,6 +13,9 @@ dependencies:
     sdk: flutter
   # https://pub.dev/packages/convex_bottom_bar
   convex_bottom_bar: ^2.6.0
+  provider: ^4.3.2+3
+  charts_flutter: ^0.9.0
+  pie_chart: ^4.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -24,14 +27,18 @@ dev_dependencies:
   splashscreen:
 
 flutter:
-
+  fonts:
+    - family: RobotoLight
+      fonts:
+      - asset: fonts/robotolight.ttf
+    - family: Helveticaneue
+      fonts:
+      - asset: fonts/helveticaneue.ttf
+    - family: Raleway
+      fonts:
+      - asset: fonts/raleway.ttf
   uses-material-design: true
   assets:
   - images/
 
-  fonts:
-    - family: Helveticaneue
-      fonts:
-        - asset: fonts/helveticaneue.ttf
-        - asset: fonts/helveticaneueitalic.ttf
-          style: italic
+  
