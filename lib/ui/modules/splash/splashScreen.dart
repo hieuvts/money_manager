@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:money_manager/ui/modules/page/homeScreen.dart';
 import 'package:splashscreen/splashscreen.dart';
+import 'package:money_manager/ui/modules/page/homeScreen.dart';
+import 'package:money_manager/ui/modules/page/pageController.dart';
 
 class MySplashScreen extends StatefulWidget {
   @override
@@ -12,7 +13,7 @@ class _MyAppState extends State<MySplashScreen> {
   Widget build(BuildContext context) {
     return new SplashScreen(
       seconds: 4,
-      navigateAfterSeconds: new HomeScreen(),
+      //navigateAfterSeconds: new PageController(),
       title: new Text(
         'Money Management',
         style: new TextStyle(

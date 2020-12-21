@@ -4,6 +4,7 @@ import 'ui/modules/page/transactionPage.dart';
 import 'ui/modules/page/graphPage.dart';
 import 'ui/modules/page/settingPage.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:splashscreen/splashscreen.dart';
 //import 'ui/modules/page/pageController.dart';
 
 void main() {
@@ -13,8 +14,31 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: new PageController(title: "Money Manager"),
+    // return MaterialApp(
+    //   home: new PageController(title: "Money Manager"),
+    // );
+    return new MaterialApp(
+      home: new SplashScreen(
+        seconds: 1,
+        navigateAfterSeconds: new PageController(title: "Money Manager"),
+        title: new Text(
+          'Money Management',
+          style: new TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 40.0, color: Colors.white),
+        ),
+        image: new Image.asset(
+          'images/splash_logo.png',
+          fit: BoxFit.contain,
+        ),
+        photoSize: 120.0,
+        backgroundColor: Color(0xFFA8DADC),
+        loadingText: new Text(
+          "Loading",
+          style: TextStyle(
+              color: Colors.white, fontSize: 16, fontStyle: FontStyle.italic),
+        ),
+        loaderColor: Colors.red,
+      ),
     );
   }
 }
@@ -36,7 +60,7 @@ class _PageControllerState extends State<PageController> {
   ];
   int selectedPage = 0;
 
-  final Map<int, dynamic> _badges = {0: '129+', 1: null, 2: null, 3: null};
+  final Map<int, dynamic> _badges = {0: '19+', 1: null, 2: null, 3: null};
 
   @override
   Widget build(BuildContext context) {
