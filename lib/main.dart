@@ -18,8 +18,9 @@ class MyApp extends StatelessWidget {
     //   home: new PageController(title: "Money Manager"),
     // );
     return new MaterialApp(
+      theme: ThemeData(fontFamily: "Helveticaneue"),
       home: new SplashScreen(
-        seconds: 1,
+        seconds: 0,
         navigateAfterSeconds: new PageController(title: "Money Manager"),
         title: new Text(
           'Money Management',
