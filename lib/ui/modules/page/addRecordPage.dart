@@ -1,35 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/ui/modules/page/transactionPage.dart';
 
-class CryptoData {
+class TransactionData {
   static final getData = [
     {
-      'name': 'Drink',
-      'symbol': 'BTC',
-      'icon': Icons.arrow_back,
-      'iconColor': Colors.orange,
+      'name': 'Food',
+      'icon': 'images/burger.png',
       'change': '-20.000',
-      'changeValue': '-20.000',
       'changeColor': Colors.redAccent,
       'value': '20.000 VND',
     },
     {
-      'name': 'Transportation',
-      'symbol': 'ETH',
-      'icon': Icons.arrow_back,
-      'iconColor': Colors.black,
+      'name': 'Parking',
+      'icon': 'images/parking.png',
       'change': '-50.000',
-      'changeValue': '-50.000',
       'changeColor': Colors.redAccent,
       'value': '50.000 VND'
     },
     {
       'name': 'Salary',
-      'symbol': 'ETH',
-      'icon': Icons.arrow_back,
-      'iconColor': Colors.black,
+      'icon': 'images/salary.png',
       'change': '+1.000.000',
-      'changeValue': '+1.000.000',
+      'changeColor': Colors.green,
+      'value': '1.000.000 VND'
+    },
+    {
+      'name': 'Salary',
+      'icon': 'images/salary.png',
+      'change': '+1.000.000',
+      'changeColor': Colors.green,
+      'value': '1.000.000 VND'
+    },
+    {
+      'name': 'Salary',
+      'icon': 'images/salary.png',
+      'change': '+1.000.000',
+      'changeColor': Colors.green,
+      'value': '1.000.000 VND'
+    },
+    {
+      'name': 'Salary',
+      'icon': 'images/salary.png',
+      'change': '+1.000.000',
+      'changeColor': Colors.green,
+      'value': '1.000.000 VND'
+    },
+    {
+      'name': 'Salary',
+      'icon': 'images/salary.png',
+      'change': '+1.000.000',
       'changeColor': Colors.green,
       'value': '1.000.000 VND'
     },
@@ -39,7 +58,7 @@ class CryptoData {
 DateTime now = DateTime.now();
 
 class Dashboard extends StatelessWidget {
-  var cryptoData = CryptoData.getData;
+  var transactionData = TransactionData.getData;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,23 +66,22 @@ class Dashboard extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+          IncomeAndOutcome(),
           Expanded(
             child: ListView.builder(
 // scrollDirection: Axis.horizontal,
-                itemCount: cryptoData.length,
+                itemCount: transactionData.length,
                 itemBuilder: (context, index) {
                   return Container(
                     padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    height: 320,
+                    height: 180,
                     width: double.maxFinite,
                     child: Card(
                       elevation: 5,
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border(
-                            top: BorderSide(
-                                width: 2.0,
-                                color: cryptoData[index]['iconColor']),
+                            top: BorderSide(width: 2.0, color: Colors.grey),
                           ),
                           color: Colors.white,
                         ),
@@ -76,34 +94,47 @@ class Dashboard extends StatelessWidget {
                                 children: <Widget>[
                                   Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 10, top: 1),
+                                          left: 1, top: 1),
                                       child: Column(
                                         children: <Widget>[
                                           Row(
                                             children: <Widget>[
                                               dateOfTransaction(
                                                   now.day.toString()),
+                                              Spacer(
+                                                flex: 1,
+                                              ),
                                               SizedBox(
                                                 height: 10,
                                               ),
-                                              cryptoNameSymbol(
-                                                  cryptoData[index]),
-                                              Spacer(),
-                                              walletChange(cryptoData[index]),
+                                              nameOfTransaction(
+                                                  transactionData[index]),
+                                              Spacer(
+                                                flex: 10,
+                                              ),
+                                              walletChange(
+                                                  transactionData[index]),
                                               SizedBox(
                                                 width: 10,
                                               ),
-                                              changeIcon(cryptoData[index]),
                                             ],
                                           ),
-                                          Divider(),
+                                          Divider(
+                                            thickness: 1.5,
+                                          ),
                                           Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: <Widget>[
+                                              SizedBox(
+                                                  height: 50,
+                                                  width: 50,
+                                                  child: icon_typeOfTransaction(
+                                                      transactionData[index])),
                                               transactionAmount(
-                                                  cryptoData[index])
+                                                  transactionData[index]),
                                             ],
                                           ),
-                                          IncomeAndOutcome(),
                                         ],
                                       ))
                                 ],
@@ -133,7 +164,7 @@ class Dashboard extends StatelessWidget {
         ));
   }
 
-  Widget cryptoNameSymbol(data) {
+  Widget nameOfTransaction(data) {
     return Align(
       alignment: Alignment.centerLeft,
       child: RichText(
@@ -141,14 +172,6 @@ class Dashboard extends StatelessWidget {
           text: '${data['name']}',
           style: TextStyle(
               fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20),
-          children: <TextSpan>[
-            TextSpan(
-                text: '\n${data['symbol']}',
-                style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold)),
-          ],
         ),
       ),
     );
@@ -161,41 +184,26 @@ class Dashboard extends StatelessWidget {
         text: TextSpan(
           text: '${data['change']}',
           style: TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.green, fontSize: 20),
-          children: <TextSpan>[
-            TextSpan(
-                text: '\n${data['changeValue']}',
-                style: TextStyle(
-                    color: data['changeColor'],
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold)),
-          ],
+              fontWeight: FontWeight.bold,
+              color: data['changeColor'],
+              fontSize: 20),
         ),
       ),
     );
   }
 
-  Widget changeIcon(data) {
-    return Align(
-        alignment: Alignment.topRight,
-        child: data['change'].contains('-')
-            ? Icon(
-                Icons.new_releases,
-                color: data['changeColor'],
-                size: 30,
-              )
-            : Icon(
-                Icons.new_releases,
-                color: data['changeColor'],
-                size: 30,
-              ));
+  Widget icon_typeOfTransaction(data) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10.0),
+      child: Image.asset(data['icon']),
+    );
   }
 
   Widget transactionAmount(data) {
     return Align(
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.topLeft,
       child: Padding(
-        padding: const EdgeInsets.only(left: 20.0),
+        padding: const EdgeInsets.only(left: 40.0),
         child: Row(
           children: <Widget>[
             RichText(
@@ -203,18 +211,9 @@ class Dashboard extends StatelessWidget {
               text: TextSpan(
                 text: '\n${data['value']}',
                 style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 35,
+                  color: Colors.grey[600],
+                  fontSize: 30,
                 ),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: '\n0.1349',
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold)),
-                ],
               ),
             ),
           ],

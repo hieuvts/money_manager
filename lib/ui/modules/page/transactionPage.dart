@@ -18,19 +18,22 @@ class _TransactionPageState extends State<TransactionPage> {
         Column(children: [
           Divider(),
           Container(child: IncomeAndOutcome()),
+          Padding(padding: EdgeInsets.only(bottom: 10)),
           Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(4),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.white12,
+                    offset: Offset(0, 2),
+                  )
+                ]),
             alignment: Alignment.topLeft,
             child: Text(
               "Recent transactions",
               style: TextStyle(fontFamily: "RobotoLight", fontSize: 18),
             ),
-          ),
-          Row(
-            children: [
-              SizedBox(
-                height: 10,
-              )
-            ],
           ),
           Container(height: 500, child: RecentTransaction()),
         ]),
@@ -66,21 +69,21 @@ class _IncomeAndOutcomeState extends State<IncomeAndOutcome> {
                     children: [
                       Text(
                         'Inflow',
-                        style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                        style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                       ),
                       Text('  Outflow',
                           style:
-                              TextStyle(fontSize: 14, color: Colors.grey[600]))
+                              TextStyle(fontSize: 16, color: Colors.grey[600]))
                     ],
                   ),
                   Column(
                     children: [
                       Text(_inflow.toString(),
                           style:
-                              TextStyle(fontSize: 14, color: Colors.grey[600])),
+                              TextStyle(fontSize: 16, color: Colors.grey[600])),
                       Text(_outflow.toString(),
                           style:
-                              TextStyle(fontSize: 14, color: Colors.grey[600]))
+                              TextStyle(fontSize: 16, color: Colors.grey[600]))
                     ],
                   ),
                 ],
@@ -105,61 +108,5 @@ class _IncomeAndOutcomeState extends State<IncomeAndOutcome> {
                 ],
               )
             ])));
-  }
-}
-
-class RecentTransaction extends StatefulWidget {
-  @override
-  _RecentTransactionState createState() => _RecentTransactionState();
-}
-
-class _RecentTransactionState extends State<RecentTransaction> {
-  final List<String> _category = [
-    'First',
-    'Drink',
-  ];
-  final List<String> _totalCost = [
-    '100000',
-    '200.000',
-  ];
-
-  final List<String> _cost = [
-    'First numb',
-    '200.000',
-  ];
-
-  DateTime now = DateTime.now();
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: ListView.separated(
-          itemCount: _category.length,
-          separatorBuilder: (context, index) => Container(
-                height: 8,
-                decoration: BoxDecoration(color: Colors.grey[300]),
-              ),
-          itemBuilder: (context, index) {
-            return ListTile(
-              isThreeLine: true,
-              leading: Text((now.day - 1).toString()),
-              title: Text(
-                _category[index],
-                style: TextStyle(letterSpacing: 1.0),
-              ),
-              subtitle: Text(_cost[index]),
-              trailing: Text(_totalCost[index]),
-              onTap: () {
-                print('Tap on $index');
-              },
-              onLongPress: () {
-                print('Long press on $index');
-              },
-            );
-          }),
-    );
   }
 }
