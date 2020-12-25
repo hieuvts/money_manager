@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'addRecordPage.dart';
+import 'package:money_manager/ui/modules/customWidget/customCardView.dart';
 
 class TransactionPage extends StatefulWidget {
   @override
@@ -115,36 +117,15 @@ class _RecentTransactionState extends State<RecentTransaction> {
   final List<String> _category = [
     'First',
     'Drink',
-    'Transportation',
-    'Gas',
-    'Electric 11Bill',
-    'Drink',
-    'Transportation',
-    'Gas',
-    'Last'
   ];
   final List<String> _totalCost = [
     '100000',
     '200.000',
-    '100.000',
-    '200.000',
-    '1.200.000',
-    'Drink',
-    'Transportation',
-    'Gas',
-    'Last numb'
   ];
 
   final List<String> _cost = [
     'First numb',
     '200.000',
-    '100.000',
-    '200.000',
-    '1.200.000',
-    'Drink',
-    'Transportation',
-    'Gas',
-    'Last numb'
   ];
 
   DateTime now = DateTime.now();

@@ -56,7 +56,8 @@ class _PageControllerState extends State<PageController> {
   final List<Widget> _pages = <Widget>[
     TransactionPage(),
     GraphPage(),
-    AddRecordPage(),
+    //AddRecordPage(),
+    Dashboard(),
     SettingPage()
   ];
   int selectedPage = 0;
