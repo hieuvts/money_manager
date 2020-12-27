@@ -13,12 +13,12 @@ class _TransactionPageState extends State<TransactionPage> {
     return Stack(
       overflow: Overflow.clip,
       alignment: AlignmentDirectional.center,
-      //fit: StackFit.expand,
+      fit: StackFit.expand,
       children: <Widget>[
         Column(children: [
           Divider(),
           Container(child: IncomeAndOutcome()),
-          Padding(padding: EdgeInsets.only(bottom: 10)),
+          //Padding(padding: EdgeInsets.only(bottom: 10)),
           Container(
             decoration: BoxDecoration(
                 color: Colors.white,
@@ -35,7 +35,8 @@ class _TransactionPageState extends State<TransactionPage> {
               style: TextStyle(fontFamily: "RobotoLight", fontSize: 18),
             ),
           ),
-          Container(height: 500, child: RecentTransaction()),
+          Divider(),
+          Expanded(child: RecentTransaction()),
         ]),
       ],
     );

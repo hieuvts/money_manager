@@ -15,9 +15,6 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // return MaterialApp(
-    //   home: new PageController(title: "Money Manager"),
-    // );
     return new MaterialApp(
       theme:
           ThemeData(fontFamily: "Helveticaneue"), //Set font chung toàn bộ app
@@ -36,7 +33,7 @@ class MyApp extends StatelessWidget {
         photoSize: 120.0,
         backgroundColor: Color(0xFFA8DADC),
         loadingText: new Text(
-          "Loading",
+          "Loading...",
           style: TextStyle(
               color: Colors.white, fontSize: 16, fontStyle: FontStyle.italic),
         ),
@@ -55,6 +52,7 @@ class PageController extends StatefulWidget {
 }
 
 class _PageControllerState extends State<PageController> {
+  //Danh sách các pages
   final List<Widget> _pages = <Widget>[
     TransactionPage(),
     GraphPage(),
@@ -63,15 +61,25 @@ class _PageControllerState extends State<PageController> {
     SettingPage()
   ];
   int _selectedPage = 0;
-  final BorderRadius _borderRadius = const BorderRadius.only(
-    topLeft: Radius.circular(10),
-    topRight: Radius.circular(0),
-    bottomLeft: Radius.circular(10),
-  );
+  //Danh sách các items trong SnakeNavBar
+  List<BottomNavigationBarItem> navBarItems = [
+    BottomNavigationBarItem(
+      icon: new Image.asset(
+        'images/transaction.png',
+      ),
+      label: 'Giao dịch',
+    ),
+    BottomNavigationBarItem(
+        icon: new Image.asset('images/graph.png'), label: 'Thống kê'),
+    BottomNavigationBarItem(
+        icon: new Image.asset('images/add.png'), label: 'Thêm'),
+    BottomNavigationBarItem(
+        icon: new Image.asset('images/settings.png'), label: 'Cài đặt'),
+  ];
+  //Beginof Config SnakeNavBar
   ShapeBorder bottomBarShape = new Border();
   SnakeBarBehaviour snakeBarStyle = SnakeBarBehaviour.floating;
-  EdgeInsets padding = const EdgeInsets.all(12);
-  int _selectedItemPosition = 0;
+  EdgeInsets padding = const EdgeInsets.all(5);
   SnakeShape snakeShape = SnakeShape.rectangle;
   bool showSelectedLabels = false;
   bool showUnselectedLabels = false;
@@ -81,13 +89,14 @@ class _PageControllerState extends State<PageController> {
   Color unselectedColor = Colors.blueGrey;
   Gradient unselectedGradient =
       const LinearGradient(colors: [Colors.red, Colors.blueGrey]);
-  Color containerColor;
-  List<Color> containerColors = [
-    const Color(0xFFFDE1D7),
-    const Color(0xFFE4EDF5),
-    const Color(0xFFE7EEED),
-    const Color(0xFFF4E4CE),
-  ];
+  // Color containerColor;
+  // List<Color> containerColors = [
+  //   const Color(0xFFFDE1D7),
+  //   const Color(0xFFE4EDF5),
+  //   const Color(0xFFE7EEED),
+  //   const Color(0xFFF4E4CE),
+  // ];
+  //Endof Config SnakeNavBar
 
   @override
   Widget build(BuildContext context) {
@@ -97,84 +106,43 @@ class _PageControllerState extends State<PageController> {
         title: Text(widget.title),
       ),
       body: _pages[_selectedPage],
-
-      // bottomNavigationBar: ConvexAppBar(
-      //   top: 0,
-      //   initialActiveIndex: 0, //Page "Giao dịch"
-      //   backgroundColor: Colors.blueAccent,
-      //   style: TabStyle.textIn,
-      //   items: [
-      //     TabItem(
-      //         icon: new Image.asset('images/transaction.png'),
-      //         title: 'Giao dịch'),
-      //     TabItem(icon: new Image.asset('images/graph.png'), title: 'Thống kê'),
-      //     TabItem(icon: new Image.asset('images/add.png'), title: 'Tạo'),
-      //     TabItem(
-      //         icon: new Image.asset('images/settings.png'), title: 'Cài đặt'),
-      //   ],
-      //   //onTap: (int i) => print('click index=$i'),
-      //   onTap: onTabTapped,
-      // ),
       bottomNavigationBar: SnakeNavigationBar.color(
         behaviour: snakeBarStyle,
         snakeShape: snakeShape,
         shape: bottomBarShape,
-
-        ///configuration for SnakeNavigationBar.color
         snakeViewColor: selectedColor,
         selectedItemColor:
             snakeShape == SnakeShape.indicator ? selectedColor : null,
         unselectedItemColor: Colors.blueGrey,
-
-        ///configuration for SnakeNavigationBar.gradient
-        // snakeViewGradient: selectedGradient,
-        // selectedItemGradient: snakeShape == SnakeShape.indicator ? selectedGradient : null,
-        // unselectedItemGradient: unselectedGradient,
-
         showUnselectedLabels: showUnselectedLabels,
         showSelectedLabels: showSelectedLabels,
-
-        currentIndex: _selectedItemPosition,
-        onTap: (index) {
-          setState(() => _selectedItemPosition = index);
-          onTabTapped(index);
-          print('tapped page $index');
-        },
-
-        selectedLabelStyle: const TextStyle(fontSize: 14),
-        unselectedLabelStyle: const TextStyle(fontSize: 10),
-        items: [
-          BottomNavigationBarItem(
-              icon: new Image.asset('images/transaction.png'),
-              label: 'Giao dịch'),
-          BottomNavigationBarItem(
-              icon: new Image.asset('images/graph.png'), label: 'Thống kê'),
-          BottomNavigationBarItem(
-              icon: new Image.asset('images/add.png'), label: 'Thêm'),
-          BottomNavigationBarItem(
-              icon: new Image.asset('images/settings.png'), label: 'Cài đặt'),
-        ],
+        currentIndex: _selectedPage,
+        // onTap: (index) {
+        //   setState(() => _selectedPage = index);
+        //   onTabTapped(index);
+        //   print('tapped page $index');
+        // },
+        onTap: onTabTapped,
+        selectedLabelStyle: const TextStyle(fontSize: 10),
+        items: navBarItems,
       ),
     ));
   }
 
   void _onPageChanged(int page) {
-    containerColor = containerColors[page];
+    //containerColor = containerColors[page];
     switch (page) {
       case 0:
-        print('invoke page 0');
         setState(() {
           snakeBarStyle = SnakeBarBehaviour.pinned;
           snakeShape = SnakeShape.rectangle;
-          padding = EdgeInsets.zero;
+          //showSelectedLabels = true;
         });
         break;
       case 1:
-        print('invoke page 1');
         setState(() {
           snakeBarStyle = SnakeBarBehaviour.pinned;
           snakeShape = SnakeShape.rectangle;
-          padding = EdgeInsets.zero;
         });
         break;
 
@@ -182,14 +150,12 @@ class _PageControllerState extends State<PageController> {
         setState(() {
           snakeBarStyle = SnakeBarBehaviour.pinned;
           snakeShape = SnakeShape.rectangle;
-          padding = EdgeInsets.zero;
         });
         break;
       case 3:
         setState(() {
           snakeBarStyle = SnakeBarBehaviour.pinned;
           snakeShape = SnakeShape.rectangle;
-          padding = EdgeInsets.zero;
         });
         break;
     }

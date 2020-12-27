@@ -60,7 +60,7 @@ class _CustomSnakeNavBarState extends State<CustomSnakeNavBar> {
       currentIndex: _selectedItemPosition,
       onTap: (index) {
         setState(() => _selectedItemPosition = index);
-        onTabTapped(index);
+        //onTabTapped(index);
         print('tapped page $index');
       },
 

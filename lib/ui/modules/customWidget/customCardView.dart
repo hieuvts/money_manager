@@ -68,12 +68,11 @@ class RecentTransaction extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: ListView.builder(
-// scrollDirection: Axis.horizontal,
                 itemCount: transactionData.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    height: 180,
+                    padding: EdgeInsets.fromLTRB(5, 8, 8, 0),
+                    height: 170,
                     width: double.maxFinite,
                     child: Card(
                       elevation: 5,
