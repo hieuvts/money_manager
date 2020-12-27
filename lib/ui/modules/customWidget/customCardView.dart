@@ -1,59 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_manager/ui/modules/page/transactionPage.dart';
-
-class TransactionData {
-  static final getData = [
-    {
-      'name': 'Food',
-      'icon': 'images/burger.png',
-      'change': '-20.000',
-      'changeColor': Colors.redAccent,
-      'value': '20.000 VND',
-    },
-    {
-      'name': 'Parking',
-      'icon': 'images/parking.png',
-      'change': '-50.000',
-      'changeColor': Colors.redAccent,
-      'value': '50.000 VND'
-    },
-    {
-      'name': 'Salary',
-      'icon': 'images/salary.png',
-      'change': '+1.000.000',
-      'changeColor': Colors.green,
-      'value': '1.000.000 VND'
-    },
-    {
-      'name': 'Salary',
-      'icon': 'images/salary.png',
-      'change': '+1.000.000',
-      'changeColor': Colors.green,
-      'value': '1.000.000 VND'
-    },
-    {
-      'name': 'Salary',
-      'icon': 'images/salary.png',
-      'change': '+1.000.000',
-      'changeColor': Colors.green,
-      'value': '1.000.000 VND'
-    },
-    {
-      'name': 'Salary',
-      'icon': 'images/salary.png',
-      'change': '+1.000.000',
-      'changeColor': Colors.green,
-      'value': '1.000.000 VND'
-    },
-    {
-      'name': 'Salary',
-      'icon': 'images/salary.png',
-      'change': '+1.000.000',
-      'changeColor': Colors.green,
-      'value': '1.000.000 VND'
-    },
-  ];
-}
+import 'package:money_manager/core/transactionExampleData.dart';
 
 DateTime now = DateTime.now();
 
@@ -72,7 +18,7 @@ class RecentTransaction extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Container(
                     padding: EdgeInsets.fromLTRB(5, 8, 8, 0),
-                    height: 170,
+                    height: 170, //Chiều cao của mỗi card
                     width: double.maxFinite,
                     child: Card(
                       elevation: 5,
@@ -127,7 +73,7 @@ class RecentTransaction extends StatelessWidget {
                                               SizedBox(
                                                   height: 50,
                                                   width: 50,
-                                                  child: icon_typeOfTransaction(
+                                                  child: iconTypeOfTransaction(
                                                       transactionData[index])),
                                               transactionAmount(
                                                   transactionData[index]),
@@ -190,7 +136,7 @@ class RecentTransaction extends StatelessWidget {
     );
   }
 
-  Widget icon_typeOfTransaction(data) {
+  Widget iconTypeOfTransaction(data) {
     return Padding(
       padding: const EdgeInsets.only(left: 10.0),
       child: Image.asset(data['icon']),

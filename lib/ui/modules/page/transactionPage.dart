@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'addRecordPage.dart';
 import 'package:money_manager/ui/modules/customWidget/customCardView.dart';
 
 class TransactionPage extends StatefulWidget {
@@ -36,7 +35,7 @@ class _TransactionPageState extends State<TransactionPage> {
             ),
           ),
           Divider(),
-          Expanded(child: RecentTransaction()),
+          Expanded(child: RecentTransaction()), //CustomCardView
         ]),
       ],
     );
