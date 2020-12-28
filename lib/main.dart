@@ -66,9 +66,9 @@ class _PageControllerState extends State<PageController> {
       ),
       body: _pages[_selectedPage],
       bottomNavigationBar: SnakeNavigationBar.color(
-        //behaviour: SnakeBarBehaviour.pinned,
+        behaviour: SnakeBarBehaviour.pinned,
         padding: EdgeInsets.all(1),
-        snakeShape: SnakeShape.rectangle,
+        snakeShape: SnakeShape.circle,
         snakeViewColor: Colors.blueAccent[100],
         currentIndex: _selectedPage,
         onTap: onItemTapped,

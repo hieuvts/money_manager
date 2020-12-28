@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/core/transactionExampleData.dart';
+import 'package:money_manager/core/monthToString.dart';
+import 'package:intl/intl.dart';
 
 DateTime now = DateTime.now();
 
@@ -17,28 +19,22 @@ class RecentTransaction extends StatelessWidget {
                 itemCount: transactionData.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    padding: EdgeInsets.fromLTRB(5, 8, 8, 0),
-                    height: 170, //Chiều cao của mỗi card
+                    //padding: EdgeInsets.fromLTRB(5, 8, 8, 0),
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    height: 372, //Chiều cao của mỗi card
                     width: double.maxFinite,
                     child: Card(
                       elevation: 5,
                       child: Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            top: BorderSide(width: 2.0, color: Colors.grey),
-                          ),
-                          color: Colors.white,
-                        ),
                         child: Padding(
-                          padding: EdgeInsets.all(7),
+                          padding: EdgeInsets.all(1),
                           child: Stack(children: <Widget>[
                             Align(
                               alignment: Alignment.centerRight,
                               child: Stack(
                                 children: <Widget>[
                                   Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 1, top: 1),
+                                      padding: const EdgeInsets.only(top: 5),
                                       child: Column(
                                         children: <Widget>[
                                           Row(
@@ -46,13 +42,25 @@ class RecentTransaction extends StatelessWidget {
                                               dateOfTransaction(
                                                   now.day.toString()),
                                               Spacer(
+                                                flex: 2,
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(DateFormat.EEEE().format(
+                                                      new DateTime.now())),
+                                                  Text(DateFormat.yMMMM()
+                                                      .format(
+                                                          new DateTime.now())),
+                                                ],
+                                              ),
+                                              Spacer(
                                                 flex: 1,
                                               ),
                                               SizedBox(
                                                 height: 10,
                                               ),
-                                              nameOfTransaction(
-                                                  transactionData[index]),
                                               Spacer(
                                                 flex: 10,
                                               ),
@@ -64,19 +72,38 @@ class RecentTransaction extends StatelessWidget {
                                             ],
                                           ),
                                           Divider(
-                                            thickness: 1.5,
+                                            thickness: 2.0,
                                           ),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: <Widget>[
-                                              SizedBox(
-                                                  height: 50,
-                                                  width: 50,
-                                                  child: iconTypeOfTransaction(
-                                                      transactionData[index])),
-                                              transactionAmount(
-                                                  transactionData[index]),
+                                              Container(
+                                                height: 290,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width -
+                                                    20,
+                                                child: ListView.builder(
+                                                    itemCount: 9,
+                                                    itemBuilder:
+                                                        (context1, index1) {
+                                                      return ListTile(
+                                                        leading:
+                                                            iconTypeOfTransaction(
+                                                                transactionData[
+                                                                    index]),
+                                                        title:
+                                                            nameOfTransaction(
+                                                                transactionData[
+                                                                    index]),
+                                                        trailing:
+                                                            transactionAmount(
+                                                                transactionData[
+                                                                    index]),
+                                                      );
+                                                    }),
+                                              )
                                             ],
                                           ),
                                         ],
@@ -96,14 +123,28 @@ class RecentTransaction extends StatelessWidget {
     );
   }
 
-  Widget dateOfTransaction(date) {
+  Widget dateOfTransaction(data) {
     return Padding(
         padding: const EdgeInsets.only(left: 15.0),
         child: Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            date,
+            data,
             style: TextStyle(fontSize: 40),
+          ),
+        ));
+  }
+
+  Widget monthOfTransaction(data) {
+    final getMonth = DateTimeToMonth.monthToString;
+    return Padding(
+        padding: const EdgeInsets.only(left: 15.0),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            getMonth[data -
+                1], //Tháng từ 1-12 tuy nhiên hàm monthToString xác định từ index 0 tới 11
+            style: TextStyle(fontSize: 15),
           ),
         ));
   }
@@ -114,8 +155,7 @@ class RecentTransaction extends StatelessWidget {
       child: RichText(
         text: TextSpan(
           text: '${data['name']}',
-          style: TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20),
+          style: TextStyle(color: Colors.black, fontSize: 20),
         ),
       ),
     );
@@ -126,7 +166,7 @@ class RecentTransaction extends StatelessWidget {
       alignment: Alignment.topRight,
       child: RichText(
         text: TextSpan(
-          text: '${data['change']}',
+          text: '${data['change']} VND',
           style: TextStyle(
               fontWeight: FontWeight.bold,
               color: data['changeColor'],
@@ -138,29 +178,22 @@ class RecentTransaction extends StatelessWidget {
 
   Widget iconTypeOfTransaction(data) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10.0),
-      child: Image.asset(data['icon']),
+      padding: const EdgeInsets.all(10.0),
+      child: Image.asset(
+        data['icon'],
+        fit: BoxFit.fitHeight,
+      ),
     );
   }
 
   Widget transactionAmount(data) {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 40.0),
-        child: Row(
-          children: <Widget>[
-            RichText(
-              textAlign: TextAlign.left,
-              text: TextSpan(
-                text: '\n${data['value']}',
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 30,
-                ),
-              ),
-            ),
-          ],
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        text: '\n${data['value']}',
+        style: TextStyle(
+          color: Colors.grey[600],
+          fontSize: 20,
         ),
       ),
     );

@@ -15,26 +15,13 @@ class _TransactionPageState extends State<TransactionPage> {
       fit: StackFit.expand,
       children: <Widget>[
         Column(children: [
-          Divider(),
-          Container(child: IncomeAndOutcome()),
-          //Padding(padding: EdgeInsets.only(bottom: 10)),
           Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(4),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.white12,
-                    offset: Offset(0, 2),
-                  )
-                ]),
-            alignment: Alignment.topLeft,
-            child: Text(
-              "Recent transactions",
-              style: TextStyle(fontFamily: "RobotoLight", fontSize: 18),
-            ),
+              padding: EdgeInsets.all(5),
+              child: Card(elevation: 5, child: IncomeAndOutcome())),
+
+          Divider(
+            thickness: 2,
           ),
-          Divider(),
           Expanded(child: RecentTransaction()), //CustomCardView
         ]),
       ],
@@ -54,10 +41,10 @@ class _IncomeAndOutcomeState extends State<IncomeAndOutcome> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(top: 5),
+        padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(0),
         ),
         child: Container(
             alignment: Alignment.center,
@@ -69,21 +56,23 @@ class _IncomeAndOutcomeState extends State<IncomeAndOutcome> {
                     children: [
                       Text(
                         'Inflow',
-                        style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                        style: TextStyle(fontSize: 18, color: Colors.grey[600]),
                       ),
+                      Divider(),
                       Text('  Outflow',
                           style:
-                              TextStyle(fontSize: 16, color: Colors.grey[600]))
+                              TextStyle(fontSize: 18, color: Colors.grey[600]))
                     ],
                   ),
                   Column(
                     children: [
-                      Text(_inflow.toString(),
+                      Text('+ ' + _inflow.toString(),
+                          style: TextStyle(
+                              fontSize: 18, color: Colors.green[300])),
+                      Divider(),
+                      Text('- ' + _outflow.toString(),
                           style:
-                              TextStyle(fontSize: 16, color: Colors.grey[600])),
-                      Text(_outflow.toString(),
-                          style:
-                              TextStyle(fontSize: 16, color: Colors.grey[600]))
+                              TextStyle(fontSize: 18, color: Colors.red[300]))
                     ],
                   ),
                 ],
@@ -92,8 +81,8 @@ class _IncomeAndOutcomeState extends State<IncomeAndOutcome> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    "______________",
-                    style: TextStyle(color: Colors.black),
+                    "______________________",
+                    style: TextStyle(color: Colors.grey),
                   )
                 ],
               ),
@@ -103,7 +92,7 @@ class _IncomeAndOutcomeState extends State<IncomeAndOutcome> {
                   new Padding(padding: EdgeInsets.all(15)),
                   Text(
                     _sum.toString(),
-                    style: TextStyle(color: Colors.red),
+                    style: TextStyle(color: Colors.red[300], fontSize: 18),
                   )
                 ],
               )
