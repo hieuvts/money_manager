@@ -187,10 +187,13 @@ class RecentTransaction extends StatelessWidget {
   }
 
   Widget transactionAmount(data) {
+    var amount = int.parse('${data['value']}');
+    String moneyData = NumberFormat.currency(locale: 'vi')
+        .format(amount); //Format theo kieu tien Vietnam
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-        text: '\n${data['value']}',
+        text: moneyData,
         style: TextStyle(
           color: Colors.grey[600],
           fontSize: 20,
