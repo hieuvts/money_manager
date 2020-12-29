@@ -6,9 +6,11 @@ import 'ui/modules/page/settingPage.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:splashscreen/splashscreen.dart';
 import 'package:money_manager/core/bottomNavBarItem.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
-  runApp(MyApp());
+  initializeDateFormatting('vi_VN', null).then((_) => runApp(MyApp()));
+  //runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -67,7 +69,7 @@ class _PageControllerState extends State<PageController> {
       body: _pages[_selectedPage],
       bottomNavigationBar: SnakeNavigationBar.color(
         behaviour: SnakeBarBehaviour.pinned,
-        padding: EdgeInsets.all(1),
+        //padding: EdgeInsets.all(1),
         snakeShape: SnakeShape.circle,
         snakeViewColor: Colors.blueAccent[100],
         currentIndex: _selectedPage,

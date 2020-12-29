@@ -4,23 +4,32 @@ class NavBarItem {
   static final List<BottomNavigationBarItem> getNavBarItems = [
     BottomNavigationBarItem(
       icon: new Image.asset(
-        'images/transaction.png',
+        'images/BWbill.png',
+        width: 35,
+        height: 35,
       ),
       label: 'Giao dịch',
     ),
     BottomNavigationBarItem(
         icon: new Image.asset(
-          'images/graph.png',
+          'images/BWpie_chart.png',
+          width: 35,
+          height: 35,
         ),
         label: 'Thống kê'),
     BottomNavigationBarItem(
         icon: new Image.asset(
-          'images/add.png',
+          'images/BWadd.png',
+          width: 35,
+          height: 35,
         ),
         label: 'Thêm'),
     BottomNavigationBarItem(
         icon: new Image.asset(
-          'images/settings.png',
+          'images/BWsettings.png',
+          width: 35,
+          height: 35,
+          alignment: Alignment.center,
         ),
         label: 'Cài đặt'),
   ];

@@ -12,7 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
   # https://pub.dev/packages/convex_bottom_bar
-  convex_bottom_bar: ^2.6.0
   provider: ^4.3.2+3
   charts_flutter: ^0.9.0
   pie_chart: ^4.0.1

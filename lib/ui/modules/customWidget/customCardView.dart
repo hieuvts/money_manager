@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/core/transactionExampleData.dart';
-import 'package:money_manager/core/monthToString.dart';
+import 'package:money_manager/core/moneyFormatter.dart';
 import 'package:intl/intl.dart';
 
 DateTime now = DateTime.now();
@@ -39,8 +39,8 @@ class RecentTransaction extends StatelessWidget {
                                         children: <Widget>[
                                           Row(
                                             children: <Widget>[
-                                              dateOfTransaction(
-                                                  now.day.toString()),
+                                              dayOfTransaction(
+                                                  transactionData[index]),
                                               Spacer(
                                                 flex: 2,
                                               ),
@@ -48,11 +48,12 @@ class RecentTransaction extends StatelessWidget {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(DateFormat.EEEE().format(
-                                                      new DateTime.now())),
-                                                  Text(DateFormat.yMMMM()
-                                                      .format(
-                                                          new DateTime.now())),
+                                                  //Format WEEKDAY
+                                                  weekdayOfTransaction(
+                                                      transactionData[index]),
+                                                  //Format YEAR_MONTH
+                                                  monthYearOfTransaction(
+                                                      transactionData[index]),
                                                 ],
                                               ),
                                               Spacer(
@@ -85,7 +86,9 @@ class RecentTransaction extends StatelessWidget {
                                                         .width -
                                                     20,
                                                 child: ListView.builder(
-                                                    itemCount: 9,
+                                                    physics:
+                                                        const NeverScrollableScrollPhysics(),
+                                                    itemCount: 19,
                                                     itemBuilder:
                                                         (context1, index1) {
                                                       return ListTile(
@@ -123,28 +126,44 @@ class RecentTransaction extends StatelessWidget {
     );
   }
 
-  Widget dateOfTransaction(data) {
+  Widget dayOfTransaction(data) {
+    var getDateTime =
+        DateFormat("dd/MM/yyyy", "vi_VN").parse('${data['date']}');
     return Padding(
         padding: const EdgeInsets.only(left: 15.0),
         child: Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            data,
-            style: TextStyle(fontSize: 40),
+            DateFormat.d('vi_VN').format(getDateTime),
+            style: TextStyle(fontSize: 35),
           ),
         ));
   }
 
-  Widget monthOfTransaction(data) {
-    final getMonth = DateTimeToMonth.monthToString;
+  Widget weekdayOfTransaction(data) {
+    var getDateTime =
+        DateFormat("dd/MM/yyyy", "vi_VN").parse('${data['date']}');
     return Padding(
         padding: const EdgeInsets.only(left: 15.0),
         child: Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            getMonth[data -
-                1], //Tháng từ 1-12 tuy nhiên hàm monthToString xác định từ index 0 tới 11
-            style: TextStyle(fontSize: 15),
+            DateFormat.EEEE('vi_VN').format(getDateTime),
+            style: TextStyle(fontSize: 18),
+          ),
+        ));
+  }
+
+  Widget monthYearOfTransaction(data) {
+    var getDateTime =
+        DateFormat("dd/MM/yyyy", "vi_VN").parse('${data['date']}');
+    return Padding(
+        padding: const EdgeInsets.only(left: 15.0),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            DateFormat.yMMMM('vi_VN').format(getDateTime),
+            style: TextStyle(fontSize: 14),
           ),
         ));
   }
@@ -166,7 +185,7 @@ class RecentTransaction extends StatelessWidget {
       alignment: Alignment.topRight,
       child: RichText(
         text: TextSpan(
-          text: '${data['change']} VND',
+          text: moneyFormater(data['change']),
           style: TextStyle(
               fontWeight: FontWeight.bold,
               color: data['changeColor'],
@@ -187,13 +206,10 @@ class RecentTransaction extends StatelessWidget {
   }
 
   Widget transactionAmount(data) {
-    var amount = int.parse('${data['value']}');
-    String moneyData = NumberFormat.currency(locale: 'vi')
-        .format(amount); //Format theo kieu tien Vietnam
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-        text: moneyData,
+        text: moneyFormater(data['value']),
         style: TextStyle(
           color: Colors.grey[600],
           fontSize: 20,
