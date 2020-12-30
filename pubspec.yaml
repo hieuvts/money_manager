@@ -37,9 +37,18 @@ flutter:
     - family: Helveticaneue
       fonts:
       - asset: fonts/helveticaneue.ttf
+    - family: HelveticaneueLight
+      fonts:
+      - asset: fonts/helveticaneuelight.ttf
     - family: Raleway
       fonts:
       - asset: fonts/raleway.ttf
+    - family: MonsterratLight
+      fonts:
+      - asset: fonts/Montserrat-Light.ttf
+    - family: MonsterratThin
+      fonts:
+      - asset: fonts/Montserrat-Thin.ttf
   uses-material-design: true
   assets:
   - images/

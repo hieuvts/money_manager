@@ -17,8 +17,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      theme:
-          ThemeData(fontFamily: "Helveticaneue"), //Set font chung toàn bộ app
+      theme: ThemeData(
+        fontFamily: "Helveticaneue",
+        // elevatedButtonTheme: ElevatedButtonThemeData(
+        //   style: ElevatedButton.styleFrom(
+        //     primary: Colors.teal,
+        //     onPrimary: Colors.white,
+        //     onSurface: Colors.grey,
+        //   ),
+        // ),
+      ), //Set font chung toàn bộ app
+
       home: new SplashScreen(
         seconds: 0,
         navigateAfterSeconds: new PageController(),
