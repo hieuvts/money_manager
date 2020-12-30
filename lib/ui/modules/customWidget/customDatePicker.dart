@@ -24,21 +24,6 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
 
   @override
   Widget build(BuildContext context) {
-    final getDateTime =
-        DateFormat("dd/MM/yyyy", "vi_VN").format(DateTime.now());
-    // return Expanded(
-    //   child: ElevatedButton(
-    //     style: ElevatedButton.styleFrom(
-    //       primary: Colors.blue[300],
-    //       onPrimary: Colors.white,
-    //     ),
-    //     onPressed: () => _selectDate(context),
-    //     child: Text(
-    //       getDateTime,
-    //       style: TextStyle(color: Colors.white),
-    //     ),
-    //   ),
-    // );
     return Expanded(
       child: InkWell(
         onTap: () {
@@ -47,10 +32,10 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         child: IgnorePointer(
           child: new TextFormField(
             decoration: new InputDecoration(
-                hintText:
-                    DateFormat("dd/MM/yyyy", "vi_VN").format(selectedDate)),
+              hintText: DateFormat("dd/MM/yyyy", "vi_VN").format(selectedDate),
+              hintStyle: TextStyle(color: Colors.grey, fontSize: 22),
+            ),
             maxLength: 10,
-            // validator: validateDob,
             onSaved: (String val) {},
           ),
         ),

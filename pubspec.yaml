@@ -19,6 +19,7 @@ dependencies:
   flutter_snake_navigationbar: ^0.4.2
   intl: ^0.16.1
   path: ^1.7.0
+  image_picker: ^0.6.7+17
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -40,6 +41,9 @@ flutter:
     - family: HelveticaneueLight
       fonts:
       - asset: fonts/helveticaneuelight.ttf
+    - family: HelveticaneueUltraLight
+      fonts:
+      - asset: fonts/helveticaneueultralight.ttf
     - family: Raleway
       fonts:
       - asset: fonts/raleway.ttf
