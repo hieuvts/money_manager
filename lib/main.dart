@@ -72,6 +72,7 @@ class _PageControllerState extends State<PageController> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('Money Manager'),
       ),

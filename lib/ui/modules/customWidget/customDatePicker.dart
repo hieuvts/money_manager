@@ -27,7 +27,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
     return Expanded(
       child: InkWell(
         onTap: () {
-          _selectDate(context); // Call Function that has showDatePicker()
+          _selectDate(context); // Gọi hàm showDatePicker()
         },
         child: IgnorePointer(
           child: new TextFormField(
@@ -36,7 +36,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
               hintStyle: TextStyle(color: Colors.grey, fontSize: 22),
             ),
             maxLength: 10,
-            onSaved: (String val) {},
+            keyboardType: TextInputType.datetime,
           ),
         ),
       ),
