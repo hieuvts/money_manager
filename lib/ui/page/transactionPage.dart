@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_manager/ui/modules/customWidget/customCardView.dart';
+import 'package:money_manager/ui/customWidget/customCardView.dart';
 
 class TransactionPage extends StatefulWidget {
   @override

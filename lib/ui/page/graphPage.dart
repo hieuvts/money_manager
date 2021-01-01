@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_manager/ui/modules/customWidget/expense_chart.dart';
+import 'package:money_manager/ui/customWidget/expense_chart.dart';
 
 class GraphPage extends StatefulWidget {
   @override

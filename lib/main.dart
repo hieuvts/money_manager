@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:money_manager/ui/modules/page/addRecordPage.dart';
-import 'ui/modules/page/transactionPage.dart';
-import 'ui/modules/page/graphPage.dart';
-import 'ui/modules/page/settingPage.dart';
+import 'package:money_manager/ui/page/addRecordPage.dart';
+import 'ui/page/transactionPage.dart';
+import 'ui/page/graphPage.dart';
+import 'ui/page/settingPage.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:splashscreen/splashscreen.dart';
 import 'package:money_manager/core/bottomNavBarItem.dart';

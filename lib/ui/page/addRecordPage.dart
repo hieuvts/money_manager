@@ -1,9 +1,9 @@
-import 'package:dropdown_formfield/dropdown_formfield.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:money_manager/ui/modules/customWidget/customDatePicker.dart';
-import 'package:money_manager/ui/modules/customWidget/customImageFromAsset.dart';
+import 'package:money_manager/ui/customWidget/customDatePicker.dart';
 import 'package:flutter/services.dart';
-import 'package:money_manager/ui/modules/customWidget/customDropdownTextField.dart';
+import 'package:dropdownfield/dropdownfield.dart';
 
 class AddTransactionPage extends StatefulWidget {
   @override
@@ -33,6 +33,8 @@ class _FillTransactionInfoState extends State<FillTransactionInfo> {
   final transactionAmountTextController = TextEditingController();
   final categoryTextController = TextEditingController();
   final noteTextController = TextEditingController();
+  File jsonFile;
+  Directory directory;
   @override
   void dispose() {
     transactionAmountTextController.dispose();
@@ -44,6 +46,30 @@ class _FillTransactionInfoState extends State<FillTransactionInfo> {
   @override
   Widget build(BuildContext context) {
     var deviceData = MediaQuery.of(context).size;
+    return BuildFillTransactionForm(
+        transactionAmountTextController: transactionAmountTextController,
+        noteTextController: noteTextController,
+        categoryTextController: categoryTextController,
+        deviceData: deviceData);
+  }
+}
+
+class BuildFillTransactionForm extends StatelessWidget {
+  const BuildFillTransactionForm({
+    Key key,
+    @required this.transactionAmountTextController,
+    @required this.noteTextController,
+    @required this.categoryTextController,
+    @required this.deviceData,
+  }) : super(key: key);
+
+  final TextEditingController transactionAmountTextController;
+  final TextEditingController noteTextController;
+  final TextEditingController categoryTextController;
+  final Size deviceData;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
@@ -77,22 +103,22 @@ class _FillTransactionInfoState extends State<FillTransactionInfo> {
           SizedBox(
             height: 20,
           ),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                      icon: Icon(Icons.category),
-                      hintText: "Select category",
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 22,
-                      )),
-                  controller: categoryTextController,
-                ),
-              )
-            ],
-          ),
+          // Row(
+          //   children: [
+          //     Expanded(
+          //       child: TextField(
+          //         decoration: InputDecoration(
+          //             icon: Icon(Icons.category),
+          //             hintText: "Select category",
+          //             hintStyle: TextStyle(
+          //               color: Colors.grey,
+          //               fontSize: 22,
+          //             )),
+          //         controller: categoryTextController,
+          //       ),
+          //     )
+          //   ],
+          // ),
           SizedBox(
             height: 20,
           ),
@@ -124,11 +150,25 @@ class _FillTransactionInfoState extends State<FillTransactionInfo> {
             CustomDatePicker(),
           ]),
           Row(children: [
-            Icon(Icons.category_sharp),
-            SizedBox(
-              width: 20,
-            ),
             // SizedBox(width: 300, height: 200, child: CustomDropdownTextField()),
+            Expanded(
+                child: DropDownField(
+              controller: categoryTextController,
+              icon: Icon(Icons.category),
+              labelText: "Choose a Category",
+              hintText: "Other",
+              itemsVisibleInDropdown: 6,
+              strict: false,
+              items: <String>[
+                'Food',
+                'Drink',
+                'Transportation',
+                'Household',
+                'Bill',
+                'Other',
+              ],
+              textStyle: TextStyle(fontSize: 18),
+            )),
           ]),
           SizedBox(
             height: 30,
@@ -168,19 +208,5 @@ class _FillTransactionInfoState extends State<FillTransactionInfo> {
             ],
           ),
         ]);
-  }
-}
-
-String _validateTransactionAmount(String transactionAmount) {
-  if (transactionAmount == null || transactionAmount == '') {
-    return 'Cần nhập số tiền';
-  }
-  return null;
-}
-
-class FirstDisabledFocusNode extends FocusNode {
-  @override
-  bool consumeKeyboardToken() {
-    return false;
   }
 }
