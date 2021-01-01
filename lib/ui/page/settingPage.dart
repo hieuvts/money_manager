@@ -38,7 +38,6 @@ class SettingPageState extends State<SettingPage> {
                       child: Text('Delete Row ${snapshot.data.length}'),
                       onPressed: () {
                         _query.deleteACategory(snapshot.data.length);
-                        print('a');
                         setState(() {});
                       })
                 ],
@@ -67,7 +66,6 @@ class SettingPageState extends State<SettingPage> {
             child: Text("Add new "),
             onPressed: () {
               _query.insertNewCategory(id + 1);
-              print('sss');
               setState(() {});
             }));
   }

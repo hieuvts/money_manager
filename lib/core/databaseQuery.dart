@@ -22,12 +22,14 @@ class QueryCtr {
       'categoryName': 'Parking',
       'categoryIcon': 'images/parking.png'
     });
+    print("Row $id has been added");
   }
 
   Future deleteACategory(int id) async {
     var dbClient = await con.db;
-    var categoryId = id - 1;
-    var count = await dbClient.delete('Category', where: 'id=$categoryId');
-    print("Row $count has been deleted");
+    var count = await dbClient
+        .delete('Category', where: 'categoryId = ?', whereArgs: [id - 1]);
+    print("Delete row $id has been deleted");
+    print("$count row has been deleted");
   }
 }
