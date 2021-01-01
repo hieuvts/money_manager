@@ -15,12 +15,19 @@ class QueryCtr {
     return list;
   }
 
-  Future<List<Category>> insertNewCategory() async {
+  Future insertNewCategory(int id) async {
     var dbClient = await con.db;
     await dbClient.insert('Category', {
-      'categoryId': '3',
+      'categoryId': '$id',
       'categoryName': 'Parking',
       'categoryIcon': 'images/parking.png'
     });
+  }
+
+  Future deleteACategory(int id) async {
+    var dbClient = await con.db;
+    var categoryId = id - 1;
+    var count = await dbClient.delete('Category', where: 'id=$categoryId');
+    print("Row $count has been deleted");
   }
 }

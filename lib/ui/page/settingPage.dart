@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:money_manager/core/databaseHelper.dart';
 import 'package:money_manager/core/databaseQuery.dart';
 import 'package:money_manager/core/models.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,7 @@ class SettingPage extends StatefulWidget {
 class SettingPageState extends State<SettingPage> {
   final _biggerFont = const TextStyle(fontSize: 18.0);
   QueryCtr _query = new QueryCtr();
-
+  @override
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List>(
@@ -22,12 +21,27 @@ class SettingPageState extends State<SettingPage> {
       initialData: List(),
       builder: (context, snapshot) {
         return snapshot.hasData
-            ? ListView.builder(
-                padding: const EdgeInsets.all(10.0),
-                itemCount: snapshot.data.length,
-                itemBuilder: (context, i) {
-                  return _buildRow(snapshot.data[i]);
-                },
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("A"),
+                  Expanded(
+                    child: ListView.builder(
+                      padding: const EdgeInsets.all(10.0),
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, i) {
+                        return _buildRow(snapshot.data[i]);
+                      },
+                    ),
+                  ),
+                  RaisedButton(
+                      child: Text('Delete Row ${snapshot.data.length}'),
+                      onPressed: () {
+                        _query.deleteACategory(snapshot.data.length);
+                        print('a');
+                        setState(() {});
+                      })
+                ],
               )
             : Center(
                 child: CircularProgressIndicator(),
@@ -36,11 +50,25 @@ class SettingPageState extends State<SettingPage> {
     );
   }
 
+// ListView.builder(
+//                 padding: const EdgeInsets.all(10.0),
+//                 itemCount: snapshot.data.length,
+//                 itemBuilder: (context, i) {
+//                   return _buildRow(snapshot.data[i]);
+//                 },
+//               )
   Widget _buildRow(Category category) {
+    var id = category.categoryId;
     return new ListTile(
         title: new Text(category.categoryName, style: _biggerFont),
-        trailing: new RaisedButton(onPressed: () {
-          _query.insertNewCategory();
-        }));
+        subtitle: new Text(category.categoryId.toString(), style: _biggerFont),
+        trailing: new RaisedButton(
+            elevation: 3,
+            child: Text("Add new "),
+            onPressed: () {
+              _query.insertNewCategory(id + 1);
+              print('sss');
+              setState(() {});
+            }));
   }
 }
