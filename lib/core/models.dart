@@ -1,11 +1,11 @@
-class Category {
+class MMCategory {
   int categoryId;
   String categoryName;
   String categoryIcon;
 
-  Category(this.categoryId, this.categoryName, this.categoryIcon);
+  MMCategory(this.categoryId, this.categoryName, this.categoryIcon);
 
-  Category.fromMap(dynamic obj) {
+  MMCategory.fromMap(dynamic obj) {
     this.categoryId = obj['categoryId'];
     this.categoryName = obj['categoryName'];
     this.categoryIcon = obj['categoryIcon'];
@@ -23,7 +23,9 @@ class Category {
   }
 }
 
-class Transaction {
+//Do 'Transaction' trùng tên với class có sẵn trong thư viện sqflite nên dùng tên khác
+//MM -> MoneyManager
+class MMTransaction {
   int transactionId;
   int transactionCategory;
   String transactionName;
@@ -32,7 +34,7 @@ class Transaction {
   String transactionDate;
   String transactionNote;
 
-  Transaction(
+  MMTransaction(
       this.transactionId,
       this.transactionCategory,
       this.transactionName,
@@ -41,7 +43,7 @@ class Transaction {
       this.transactionDate,
       this.transactionNote);
 
-  Transaction.fromMap(dynamic obj) {
+  MMTransaction.fromMap(dynamic obj) {
     this.transactionId = obj['transactionId'];
     this.transactionCategory = obj['transactionCategory'];
     this.transactionName = obj['transactionName'];

@@ -12,8 +12,8 @@ class SettingPage extends StatefulWidget {
 
 class SettingPageState extends State<SettingPage> {
   final _biggerFont = const TextStyle(fontSize: 18.0);
-  QueryCtr _query = new QueryCtr();
-  @override
+  var addCategoryTextController = new TextEditingController();
+  QueryMMCategory _query = new QueryMMCategory();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List>(
@@ -34,12 +34,72 @@ class SettingPageState extends State<SettingPage> {
                       },
                     ),
                   ),
-                  RaisedButton(
-                      child: Text('Delete Row ${snapshot.data.length}'),
-                      onPressed: () {
-                        _query.deleteACategory(snapshot.data.length);
-                        setState(() {});
-                      })
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      RaisedButton(
+                          elevation: 3,
+                          child: Text("Add new "),
+                          onPressed: () {
+                            _query.insertNewCategory(snapshot.data.length + 1,
+                                addCategoryTextController.text);
+                            setState(() {});
+                          }),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: TextField(
+                            autofocus: false,
+                            decoration: InputDecoration(
+                                hintText: "Enter new category",
+                                hintStyle: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 22,
+                                )),
+                            controller: addCategoryTextController,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      RaisedButton(
+                          child: Text('Delete Row ${snapshot.data.length}'),
+                          onPressed: () {
+                            _query.deleteACategory(snapshot.data.length);
+                            setState(() {});
+                          }),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RaisedButton(
+                          child: Text('Update Row ${snapshot.data.length}'),
+                          onPressed: () {
+                            _query.updateACategory(snapshot.data.length,
+                                addCategoryTextController.text);
+                            setState(() {});
+                          }),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: TextField(
+                            autofocus: false,
+                            decoration: InputDecoration(
+                                hintText: "Update category",
+                                hintStyle: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 22,
+                                )),
+                            controller: addCategoryTextController,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               )
             : Center(
@@ -49,24 +109,11 @@ class SettingPageState extends State<SettingPage> {
     );
   }
 
-// ListView.builder(
-//                 padding: const EdgeInsets.all(10.0),
-//                 itemCount: snapshot.data.length,
-//                 itemBuilder: (context, i) {
-//                   return _buildRow(snapshot.data[i]);
-//                 },
-//               )
-  Widget _buildRow(Category category) {
+  Widget _buildRow(MMCategory category) {
     var id = category.categoryId;
     return new ListTile(
-        title: new Text(category.categoryName, style: _biggerFont),
-        subtitle: new Text(category.categoryId.toString(), style: _biggerFont),
-        trailing: new RaisedButton(
-            elevation: 3,
-            child: Text("Add new "),
-            onPressed: () {
-              _query.insertNewCategory(id + 1);
-              setState(() {});
-            }));
+      title: new Text(category.categoryName, style: _biggerFont),
+      subtitle: new Text(category.categoryId.toString(), style: _biggerFont),
+    );
   }
 }
