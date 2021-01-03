@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:money_manager/core/databaseModels.dart';
+import 'package:money_manager/core/databaseQuery.dart';
 import 'package:money_manager/core/transactionExampleData.dart';
 import 'package:money_manager/core/moneyFormatter.dart';
 import 'package:money_manager/userWidget/viewTransactionDetail.dart';
@@ -25,142 +27,152 @@ class _RecentTransactionState extends State<RecentTransaction> {
     super.setState(fn);
   }
 
+  QueryMMTransaction _query = new QueryMMTransaction();
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            child: ListView.builder(
-                itemCount: transactionData.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    //padding: EdgeInsets.fromLTRB(5, 8, 8, 0),
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    height: 372, //Chiều cao của mỗi card
-                    width: double.maxFinite,
-                    child: Card(
-                      elevation: 5,
-                      child: Container(
-                        child: Padding(
-                          padding: EdgeInsets.all(1),
-                          child: Stack(children: <Widget>[
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Stack(
-                                children: <Widget>[
-                                  Padding(
-                                      padding: const EdgeInsets.only(top: 5),
-                                      child: Column(
-                                        children: <Widget>[
-                                          Row(
-                                            children: <Widget>[
-                                              buildDayOfTransaction(
-                                                  transactionData[index]),
-                                              Spacer(
-                                                flex: 2,
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  //Format WEEKDAY
-                                                  buildWeekdayOfTransaction(
-                                                      transactionData[index]),
-                                                  //Format YEAR_MONTH
-                                                  buildMonthYearOfTransaction(
-                                                      transactionData[index]),
-                                                ],
-                                              ),
-                                              Spacer(
-                                                flex: 1,
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Spacer(
-                                                flex: 10,
-                                              ),
-                                              buildTransactionNote(
-                                                  transactionData[index]),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                            ],
-                                          ),
-                                          Divider(
-                                            thickness: 2.0,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: <Widget>[
-                                              Container(
-                                                height: 290,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width -
-                                                    20,
-                                                child: ListView.builder(
-                                                    physics:
-                                                        const NeverScrollableScrollPhysics(),
-                                                    itemCount: 19,
-                                                    itemBuilder:
-                                                        (context1, index1) {
-                                                      return ListTile(
-                                                          leading:
-                                                              buildTransactionIcon(
-                                                                  transactionData[
-                                                                      index]),
-                                                          title:
-                                                              buildTransactionSubCategory(
-                                                                  transactionData[
-                                                                      index]),
-                                                          trailing:
-                                                              buildTransactionAmount(
-                                                                  transactionData[
-                                                                      index]),
-                                                          onTap: () {
-                                                            updateTransactionValue(
-                                                                transactionData[
-                                                                    index]);
-                                                            _awaitValueFromEditTransactionScr(
-                                                              context,
-                                                              transactionId,
-                                                              transactionSubCategory,
-                                                              transactionIcon,
-                                                              transactionAmount,
-                                                              transactionDate,
-                                                              transactionNote,
-                                                            );
-                                                            print("Tapped");
-                                                          });
-                                                    }),
-                                              )
-                                            ],
-                                          ),
-                                        ],
-                                      ))
-                                ],
+    return FutureBuilder<List>(
+        future: _query.getAllCategory(),
+        initialData: List(),
+        builder: (context, snapshot) {
+          return Container(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          //padding: EdgeInsets.fromLTRB(5, 8, 8, 0),
+                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          height: 372, //Chiều cao của mỗi card
+                          width: double.maxFinite,
+                          child: Card(
+                            elevation: 5,
+                            child: Container(
+                              child: Padding(
+                                padding: EdgeInsets.all(1),
+                                child: Stack(children: <Widget>[
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 5),
+                                            child: Column(
+                                              children: <Widget>[
+                                                Row(
+                                                  children: <Widget>[
+                                                    buildDayOfTransaction(
+                                                        snapshot.data[index]),
+                                                    Spacer(
+                                                      flex: 2,
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        //Format WEEKDAY
+                                                        buildWeekdayOfTransaction(
+                                                            snapshot
+                                                                .data[index]),
+                                                        //Format YEAR_MONTH
+                                                        buildMonthYearOfTransaction(
+                                                            snapshot
+                                                                .data[index]),
+                                                      ],
+                                                    ),
+                                                    Spacer(
+                                                      flex: 1,
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Spacer(
+                                                      flex: 10,
+                                                    ),
+                                                    buildTransactionNote(
+                                                        snapshot.data[index]),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                  ],
+                                                ),
+                                                Divider(
+                                                  thickness: 2.0,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Container(
+                                                      height: 290,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width -
+                                                              20,
+                                                      child: ListView.builder(
+                                                          physics:
+                                                              const NeverScrollableScrollPhysics(),
+                                                          itemCount: 5,
+                                                          itemBuilder:
+                                                              (context1,
+                                                                  index1) {
+                                                            return ListTile(
+                                                                leading: buildTransactionIcon(
+                                                                    snapshot.data[
+                                                                        index]),
+                                                                title: buildTransactionSubCategory(
+                                                                    snapshot.data[
+                                                                        index]),
+                                                                trailing: buildTransactionAmount(
+                                                                    snapshot.data[
+                                                                        index]),
+                                                                onTap: () {
+                                                                  updateTransactionValue(
+                                                                      snapshot.data[
+                                                                          index]);
+                                                                  _awaitValueFromEditTransactionScr(
+                                                                    context,
+                                                                    transactionId,
+                                                                    transactionSubCategory,
+                                                                    transactionIcon,
+                                                                    transactionAmount,
+                                                                    transactionDate,
+                                                                    transactionNote,
+                                                                  );
+                                                                  print(
+                                                                      "Tapped");
+                                                                });
+                                                          }),
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            ))
+                                      ],
+                                    ),
+                                  )
+                                ]),
                               ),
-                            )
-                          ]),
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-          ),
-        ],
-      ),
-    );
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+              ],
+            ),
+          );
+        });
   }
 
-  Widget buildDayOfTransaction(data) {
+  Widget buildDayOfTransaction(MMTransaction data) {
     var getDateTime =
-        DateFormat("dd/MM/yyyy", "vi_VN").parse('${data['transactionDate']}');
+        DateFormat("dd/MM/yyyy", "vi_VN").parse(data.transactionDate);
     return Padding(
         padding: const EdgeInsets.only(left: 15.0),
         child: Align(
@@ -172,9 +184,9 @@ class _RecentTransactionState extends State<RecentTransaction> {
         ));
   }
 
-  Widget buildWeekdayOfTransaction(data) {
+  Widget buildWeekdayOfTransaction(MMTransaction data) {
     var getDateTime =
-        DateFormat("dd/MM/yyyy", "vi_VN").parse('${data['transactionDate']}');
+        DateFormat("dd/MM/yyyy", "vi_VN").parse(data.transactionDate);
     return Padding(
         padding: const EdgeInsets.only(left: 15.0),
         child: Align(
@@ -186,9 +198,9 @@ class _RecentTransactionState extends State<RecentTransaction> {
         ));
   }
 
-  Widget buildMonthYearOfTransaction(data) {
+  Widget buildMonthYearOfTransaction(MMTransaction data) {
     var getDateTime =
-        DateFormat("dd/MM/yyyy", "vi_VN").parse('${data['transactionDate']}');
+        DateFormat("dd/MM/yyyy", "vi_VN").parse(data.transactionDate);
     return Padding(
         padding: const EdgeInsets.only(left: 15.0),
         child: Align(
@@ -200,57 +212,57 @@ class _RecentTransactionState extends State<RecentTransaction> {
         ));
   }
 
-  Widget buildTransactionSubCategory(data) {
+  Widget buildTransactionSubCategory(MMTransaction data) {
     return Align(
       alignment: Alignment.centerLeft,
       child: RichText(
         text: TextSpan(
-          text: '${data['transactionSubCategory']}',
+          text: data.transactionSubCategory.toString(),
           style: TextStyle(color: Colors.black, fontSize: 20),
         ),
       ),
     );
   }
 
-  Widget buildTransactionNote(data) {
+  Widget buildTransactionNote(MMTransaction data) {
     return Align(
       alignment: Alignment.topRight,
       child: RichText(
         text: TextSpan(
-          text: '${data['transactionNote']}',
+          text: data.transactionNote,
           style: TextStyle(fontSize: 10),
         ),
       ),
     );
   }
 
-  Widget getTransactionId(data) {
+  Widget getTransactionId(MMTransaction data) {
     return Align(
       alignment: Alignment.topRight,
       child: RichText(
         text: TextSpan(
-          text: '${data['transactionId']}',
+          text: data.transactionId.toString(),
           style: TextStyle(fontSize: 10),
         ),
       ),
     );
   }
 
-  Widget buildTransactionIcon(data) {
+  Widget buildTransactionIcon(MMTransaction data) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Image.asset(
-        data['transactionIcon'],
+        data.transactionIcon,
         fit: BoxFit.fitHeight,
       ),
     );
   }
 
-  Widget buildTransactionAmount(data) {
+  Widget buildTransactionAmount(MMTransaction data) {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-        text: moneyFormater(data['transactionAmount']),
+        text: moneyFormater(data.transactionAmount),
         style: TextStyle(
           color: Colors.grey[600],
           fontSize: 20,
@@ -259,14 +271,14 @@ class _RecentTransactionState extends State<RecentTransaction> {
     );
   }
 
-  void updateTransactionValue(data) {
-    transactionId = int.parse('${data['transactionId']}');
-    transactionSubCategory = '${data['transactionSubCategory']}';
-    transactionIcon = '${data['transactionIcon']}';
-    transactionAmount = '${data['transactionAmount']}';
-    transactionNote = '${data['transactionNote']}';
+  void updateTransactionValue(MMTransaction data) {
+    transactionId = data.transactionId;
+    transactionSubCategory = data.transactionSubCategory.toString();
+    transactionIcon = data.transactionIcon;
+    transactionAmount = data.transactionAmount;
+    transactionNote = data.transactionNote;
     var getDateTime =
-        DateFormat("dd/MM/yyyy", "vi_VN").parse('${data['transactionDate']}');
+        DateFormat("dd/MM/yyyy", "vi_VN").parse(data.transactionDate);
     transactionDate = getDateTime.toString();
   }
 

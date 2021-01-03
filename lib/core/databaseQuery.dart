@@ -8,7 +8,7 @@ class QueryMMCategory {
 
   Future<List<MMCategory>> getAllCategory() async {
     var dbClient = await con.db;
-    var res = await dbClient.query("Category");
+    var res = await dbClient.query("MMCategory");
 
     List<MMCategory> list =
         res.isNotEmpty ? res.map((c) => MMCategory.fromMap(c)).toList() : null;
@@ -19,7 +19,7 @@ class QueryMMCategory {
   Future insertNewCategory(int id, String categoryName) async {
     var dbClient = await con.db;
     await dbClient.insert(
-        'Category',
+        'MMCategory',
         {
           'categoryId': '$id',
           'categoryName': '$categoryName',
@@ -32,7 +32,7 @@ class QueryMMCategory {
   Future deleteACategory(int id) async {
     var dbClient = await con.db;
     var count = await dbClient
-        .delete('Category', where: 'categoryId = ?', whereArgs: [id]);
+        .delete('MMCategory', where: 'categoryId = ?', whereArgs: [id]);
     print("Delete row $id ");
     print("$count row has been deleted");
   }
@@ -40,7 +40,7 @@ class QueryMMCategory {
   Future updateACategory(int id, String categoryName) async {
     var dbClient = await con.db;
     var count = await dbClient.update(
-        'Category', {'categoryName': '$categoryName'},
+        'MMCategory', {'categoryName': '$categoryName'},
         where: 'categoryId = ?',
         whereArgs: [id],
         conflictAlgorithm: ConflictAlgorithm.replace);
@@ -54,7 +54,7 @@ class QueryMMTransaction {
 
   Future<List<MMTransaction>> getAllCategory() async {
     var dbClient = await con.db;
-    var res = await dbClient.query("Transaction");
+    var res = await dbClient.query("MMTransaction");
     //raw SQL
 //     select transactionId, transactionAmount, MMsubCategory.subCategoryName,transactionDate, transactionIcon, transactionNote
 // from MMTransaction, MMsubCategory where MMTransaction.transactionSubCategory=MMsubCategory.subCategoryId
@@ -65,7 +65,7 @@ class QueryMMTransaction {
     return list;
   }
 
-  Future insertNewCategory(
+  Future insertNewTransaction(
       int id,
       int transactionCategory,
       double transactionAmount,
@@ -74,7 +74,7 @@ class QueryMMTransaction {
       String transactionNote) async {
     var dbClient = await con.db;
     await dbClient.insert(
-        'Transaction',
+        'MMTransaction',
         {
           'transactionId': '$id',
           'transactionCategory': '$transactionCategory',
@@ -90,15 +90,15 @@ class QueryMMTransaction {
     print("Row $id has been added");
   }
 
-  Future deleteACategory(int id) async {
+  Future deleteATransaction(int id) async {
     var dbClient = await con.db;
     var count = await dbClient
-        .delete('Transaction', where: 'transactionId = ?', whereArgs: [id]);
+        .delete('MMTransaction', where: 'transactionId = ?', whereArgs: [id]);
     print("Delete row $id ");
     print("$count row has been deleted");
   }
 
-  Future updateACategory(
+  Future updateATransaction(
       int id,
       double transactionAmount,
       String transactionIcon,
@@ -106,7 +106,7 @@ class QueryMMTransaction {
       String transactionNote) async {
     var dbClient = await con.db;
     var count = await dbClient.update(
-        'Transaction',
+        'MMTransaction',
         {
           'transactionAmount': '$transactionAmount',
           'transactionIcon': '$transactionIcon',

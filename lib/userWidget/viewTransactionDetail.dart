@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_manager/core/databaseQuery.dart';
 import 'package:money_manager/ui/customWidget/customImageFromAsset.dart';
 
 // class EditTransaction extends StatefulWidget {
@@ -23,6 +24,7 @@ class EditTransaction extends StatelessWidget {
     @required this.transactionDate,
     @required this.transactionNote,
   }) : super(key: key);
+  QueryMMTransaction _query = new QueryMMTransaction();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,12 @@ class EditTransaction extends StatelessWidget {
                           child: Icon(Icons.arrow_back_rounded)),
                       Spacer(),
                       FlatButton(onPressed: () {}, child: Icon(Icons.edit)),
-                      FlatButton(onPressed: () {}, child: Icon(Icons.delete)),
+                      FlatButton(
+                          onPressed: () {
+                            print('Button Delete is pressed');
+                            _deleteThisTransaction(transactionId);
+                          },
+                          child: Icon(Icons.delete)),
                     ],
                   ),
                   Divider(
@@ -124,5 +131,9 @@ class EditTransaction extends StatelessWidget {
   void _sendValueBack(BuildContext context) {
     //String textToSendBack = textFieldController.text;
     //Navigator.pop(context, textToSendBack);
+  }
+  void _deleteThisTransaction(int id) {
+    print('Invoke delete transaction command');
+    _query.deleteATransaction(id);
   }
 }
