@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/core/transactionExampleData.dart';
 import 'package:money_manager/core/moneyFormatter.dart';
+import 'package:money_manager/ui/page/editTransaction.dart';
 import 'package:intl/intl.dart';
 
 DateTime now = DateTime.now();
 
-class RecentTransaction extends StatelessWidget {
+class RecentTransaction extends StatefulWidget {
+  @override
+  _RecentTransactionState createState() => _RecentTransactionState();
+}
+
+class _RecentTransactionState extends State<RecentTransaction> {
   final transactionData = TransactionData.getData;
   @override
   Widget build(BuildContext context) {
@@ -92,19 +98,23 @@ class RecentTransaction extends StatelessWidget {
                                                     itemBuilder:
                                                         (context1, index1) {
                                                       return ListTile(
-                                                        leading:
-                                                            iconTypeOfTransaction(
-                                                                transactionData[
-                                                                    index]),
-                                                        title:
-                                                            nameOfTransaction(
-                                                                transactionData[
-                                                                    index]),
-                                                        trailing:
-                                                            transactionAmount(
-                                                                transactionData[
-                                                                    index]),
-                                                      );
+                                                          leading:
+                                                              iconTypeOfTransaction(
+                                                                  transactionData[
+                                                                      index]),
+                                                          title:
+                                                              nameOfTransaction(
+                                                                  transactionData[
+                                                                      index]),
+                                                          trailing:
+                                                              transactionAmount(
+                                                                  transactionData[
+                                                                      index]),
+                                                          onTap: () {
+                                                            _awaitValueFromEditTransactionScr(
+                                                                context);
+                                                            print("Tapped");
+                                                          });
                                                     }),
                                               )
                                             ],
@@ -216,5 +226,13 @@ class RecentTransaction extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  //Chờ lấy các giá trị từ màn hình "Chỉnh sửa thông tin giao dịch"
+  void _awaitValueFromEditTransactionScr(BuildContext context) async {
+    var result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => EditTransaction()));
+    //Sau khi chỉnh sửa ở màn hình 2 hoàn tất thì update màn hình này
+    setState(() {});
   }
 }

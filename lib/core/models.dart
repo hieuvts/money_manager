@@ -23,21 +23,49 @@ class MMCategory {
   }
 }
 
+class MMsubCategory {
+  int subCategoryId;
+  String subCategoryName;
+  String subCategoryIcon;
+  int categoryIdFK;
+
+  MMsubCategory(this.subCategoryId, this.subCategoryName, this.subCategoryIcon,
+      this.categoryIdFK);
+
+  MMsubCategory.fromMap(dynamic obj) {
+    this.subCategoryId = obj['subCategoryId'];
+    this.subCategoryName = obj['subCategoryName'];
+    this.subCategoryIcon = obj['subCategoryIcon'];
+    this.categoryIdFK = obj['categoryIdFK'];
+  }
+
+  int get getsubCategoryId => subCategoryId;
+  String get getsubCategoryName => subCategoryName;
+  String get getsubCategoryIcon => subCategoryIcon;
+  int get getcategoryIdFK => categoryIdFK;
+  Map<String, dynamic> toMap() {
+    var map = new Map<String, dynamic>();
+    map["subCategoryId"] = subCategoryId;
+    map["subCategoryName"] = subCategoryName;
+    map["subCategoryIcon"] = subCategoryIcon;
+    map["categoryIdFK"] = categoryIdFK;
+    return map;
+  }
+}
+
 //Do 'Transaction' trùng tên với class có sẵn trong thư viện sqflite nên dùng tên khác
 //MM -> MoneyManager
 class MMTransaction {
   int transactionId;
-  int transactionCategory;
-  String transactionName;
-  double transactionAmount;
+  int transactionSubCategory;
+  String transactionAmount;
   String transactionIcon;
   String transactionDate;
   String transactionNote;
 
   MMTransaction(
       this.transactionId,
-      this.transactionCategory,
-      this.transactionName,
+      this.transactionSubCategory,
       this.transactionAmount,
       this.transactionIcon,
       this.transactionDate,
@@ -45,8 +73,7 @@ class MMTransaction {
 
   MMTransaction.fromMap(dynamic obj) {
     this.transactionId = obj['transactionId'];
-    this.transactionCategory = obj['transactionCategory'];
-    this.transactionName = obj['transactionName'];
+    this.transactionSubCategory = obj['transactionSubCategory'];
     this.transactionAmount = obj['transactionAmount'];
     this.transactionIcon = obj['transactionIcon'];
     this.transactionDate = obj['transactionDate'];
@@ -54,9 +81,8 @@ class MMTransaction {
   }
 
   int get getTransactionId => transactionId;
-  int get getTransactionCategory => transactionCategory;
-  String get getTransactionName => transactionName;
-  double get getTransactionAmount => transactionAmount;
+  int get getTransactionSubCategory => transactionSubCategory;
+  String get getTransactionAmount => transactionAmount;
   String get getTransactionIcon => transactionIcon;
   String get getTransactionDate => transactionDate;
   String get getTransactionNote => transactionNote;
@@ -64,8 +90,7 @@ class MMTransaction {
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
     map["transactionId"] = transactionId;
-    map["transactionCategory"] = transactionCategory;
-    map["transactionName"] = transactionName;
+    map["transactionSubCategory"] = transactionSubCategory;
     map["transactionAmount"] = transactionAmount;
     map["transactionIcon"] = transactionIcon;
     map["transactionDate"] = transactionDate;

@@ -55,7 +55,9 @@ class QueryMMTransaction {
   Future<List<MMTransaction>> getAllCategory() async {
     var dbClient = await con.db;
     var res = await dbClient.query("Transaction");
-
+    //raw SQL
+//     select transactionId, transactionAmount, MMsubCategory.subCategoryName,transactionDate, transactionIcon, transactionNote
+// from MMTransaction, MMsubCategory where MMTransaction.transactionSubCategory=MMsubCategory.subCategoryId
     List<MMTransaction> list = res.isNotEmpty
         ? res.map((c) => MMTransaction.fromMap(c)).toList()
         : null;
@@ -82,6 +84,9 @@ class QueryMMTransaction {
           'transactionNote': '$transactionNote',
         },
         conflictAlgorithm: ConflictAlgorithm.replace);
+    //raw sql
+//         INSERT INTO MMTransaction($transactionSubCategory, $transactionAmount, $transactionIcon, $transactionDate, $transactionNote)
+// VALUES (4, '3000', 'images/parking.png', '29/12/2020', 'Bike parking 2')
     print("Row $id has been added");
   }
 
