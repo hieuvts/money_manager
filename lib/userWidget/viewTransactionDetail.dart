@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/ui/customWidget/customImageFromAsset.dart';
-import 'package:money_manager/ui/page/addRecordPage.dart';
 
-class EditTransaction extends StatefulWidget {
-  @override
-  _EditTransactionState createState() => _EditTransactionState();
-}
+// class EditTransaction extends StatefulWidget {
+//   @override
+//   _EditTransactionState createState() => _EditTransactionState();
+// }
 
-class _EditTransactionState extends State<EditTransaction> {
-  final String transactionAmount;
-
+class EditTransaction extends StatelessWidget {
+  final int transactionId;
   final String transactionSubCategory;
-
   final String transactionIcon;
-  final String transactionNote;
+  final String transactionAmount;
   final String transactionDate;
+  final String transactionNote;
 
-  _EditTransactionState(
-      {this.transactionAmount,
-      this.transactionNote,
-      this.transactionDate,
-      this.transactionSubCategory,
-      this.transactionIcon});
+  EditTransaction({
+    Key key,
+    @required this.transactionId,
+    @required this.transactionSubCategory,
+    @required this.transactionIcon,
+    @required this.transactionAmount,
+    @required this.transactionDate,
+    @required this.transactionNote,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -34,11 +36,10 @@ class _EditTransactionState extends State<EditTransaction> {
           child: Card(
             elevation: 5,
             child: Container(
-              height: 400,
+              height: 350,
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       FlatButton(
                           onPressed: () {
@@ -54,14 +55,14 @@ class _EditTransactionState extends State<EditTransaction> {
                     thickness: 2,
                   ),
                   SizedBox(
-                    height: 80,
+                    height: 60,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Column(
                         children: [
-                          customImageFromAsset('images/foodAndBeverage.png'),
+                          customImageFromAsset(transactionIcon),
                           SizedBox(
                             height: 15,
                           ),
@@ -81,26 +82,30 @@ class _EditTransactionState extends State<EditTransaction> {
                       ),
                       Column(
                         children: [
-                          Text("Food & Beverage"),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            "-10.000",
-                            style: TextStyle(color: Colors.red, fontSize: 30),
+                          Row(
+                            children: [
+                              Text(transactionSubCategory),
+                            ],
                           ),
                           SizedBox(
                             height: 15,
                           ),
                           Text(
-                            "Sunday, 29/12/2020",
+                            transactionAmount,
+                            style: TextStyle(color: Colors.red, fontSize: 28),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            transactionDate,
                             style: TextStyle(fontSize: 20),
                           ),
                           SizedBox(
                             height: 15,
                           ),
                           Text(
-                            "A note here",
+                            transactionNote,
                             style: TextStyle(fontSize: 20),
                           ),
                         ],

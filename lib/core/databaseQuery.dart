@@ -1,4 +1,4 @@
-import 'package:money_manager/core/models.dart';
+import 'package:money_manager/core/databaseModels.dart';
 import 'dart:async';
 import 'package:money_manager/core/databaseHelper.dart';
 import 'package:sqflite/sqflite.dart';

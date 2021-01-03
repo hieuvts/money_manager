@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:money_manager/core/databaseQuery.dart';
-import 'package:money_manager/core/models.dart';
+import 'package:money_manager/core/databaseModels.dart';
 import 'package:flutter/material.dart';
 
 class SettingPage extends StatefulWidget {
