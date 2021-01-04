@@ -57,7 +57,7 @@ class MMsubCategory {
 //MM -> MoneyManager
 class MMTransaction {
   int transactionId;
-  int transactionSubCategory;
+  String transactionSubCategory;
   String transactionAmount;
   String transactionIcon;
   String transactionDate;
@@ -73,7 +73,7 @@ class MMTransaction {
 
   MMTransaction.fromMap(dynamic obj) {
     this.transactionId = obj['transactionId'];
-    this.transactionSubCategory = obj['transactionSubCategory'];
+    this.transactionSubCategory = obj['subCategoryName'];
     this.transactionAmount = obj['transactionAmount'];
     this.transactionIcon = obj['transactionIcon'];
     this.transactionDate = obj['transactionDate'];
@@ -81,7 +81,7 @@ class MMTransaction {
   }
 
   int get getTransactionId => transactionId;
-  int get getTransactionSubCategory => transactionSubCategory;
+  String get getTransactionSubCategory => transactionSubCategory;
   String get getTransactionAmount => transactionAmount;
   String get getTransactionIcon => transactionIcon;
   String get getTransactionDate => transactionDate;

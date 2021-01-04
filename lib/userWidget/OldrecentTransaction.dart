@@ -282,7 +282,7 @@ class _OldRecentTransactionState extends State<OldRecentTransaction> {
     var result = await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => EditTransaction(
+            builder: (context) => ViewTransactionDetail(
                   transactionId: transactionId,
                   transactionSubCategory: transactionSubCategory,
                   transactionIcon: transactionIcon,

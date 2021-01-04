@@ -52,9 +52,11 @@ class QueryMMCategory {
 class QueryMMTransaction {
   DatabaseHelper con = new DatabaseHelper();
 
-  Future<List<MMTransaction>> getAllCategory() async {
+  Future<List<MMTransaction>> getAllTransaction() async {
     var dbClient = await con.db;
-    var res = await dbClient.query("MMTransaction");
+    //var res = await dbClient.query("MMTransaction");
+    var res = await dbClient.rawQuery(
+        'select transactionId, MMsubCategory.subCategoryName, transactionIcon, transactionAmount, transactionDate, transactionNote from MMTransaction, MMsubCategory where MMTransaction.transactionSubCategory=MMsubCategory.subCategoryId');
     //raw SQL
 //     select transactionId, transactionAmount, MMsubCategory.subCategoryName,transactionDate, transactionIcon, transactionNote
 // from MMTransaction, MMsubCategory where MMTransaction.transactionSubCategory=MMsubCategory.subCategoryId
@@ -76,7 +78,6 @@ class QueryMMTransaction {
     await dbClient.insert(
         'MMTransaction',
         {
-          'transactionId': '$id',
           'transactionCategory': '$transactionCategory',
           'transactionAmount': '$transactionAmount',
           'transactionIcon': '$transactionIcon',

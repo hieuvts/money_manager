@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_manager/ui/page/addRecordPage.dart';
+import 'package:money_manager/ui/page/addTransactionPage.dart';
 import 'ui/page/transactionPage.dart';
 import 'ui/page/graphPage.dart';
 import 'ui/page/settingPage.dart';
@@ -60,6 +60,7 @@ class PageController extends StatefulWidget {
 
 class _PageControllerState extends State<PageController> {
   final navigationBarItem = NavBarItem.getNavBarItems;
+  var appBarTitle = 'Money Manager';
   //Danh sách các pages
   final List<Widget> _pages = <Widget>[
     TransactionPage(),
@@ -74,7 +75,7 @@ class _PageControllerState extends State<PageController> {
         home: Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: Text('Money Manager'),
+        title: Text(appBarTitle),
       ),
       body: _pages[_selectedPage],
       bottomNavigationBar: SnakeNavigationBar.color(
@@ -91,6 +92,21 @@ class _PageControllerState extends State<PageController> {
 
   void onItemTapped(int index) {
     setState(() {
+      switch (index) {
+        case 0:
+          appBarTitle = 'Money Manager';
+          break;
+        case 1:
+          appBarTitle = 'Thống kê lịch sử giao dịch';
+          break;
+        case 2:
+          appBarTitle = 'Thêm giao dịch mới';
+          break;
+        case 3:
+          appBarTitle = 'Cài đặt';
+          break;
+        default:
+      }
       _selectedPage = index;
     });
   }

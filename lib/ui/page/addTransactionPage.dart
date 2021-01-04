@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:money_manager/ui/customWidget/customDatePicker.dart';
 import 'package:flutter/services.dart';
 import 'package:dropdownfield/dropdownfield.dart';
+import 'package:money_manager/ui/page/chooseCategoryPage.dart';
+import 'package:money_manager/ui/page/editTransactionPage.dart';
 
 class AddTransactionPage extends StatefulWidget {
   @override
@@ -14,7 +16,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+      padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
       child: Card(
         elevation: 3,
         child: SingleChildScrollView(
@@ -73,13 +75,6 @@ class BuildFillTransactionForm extends StatelessWidget {
     return Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Nhập thông tin giao dịch",
-              style: TextStyle(fontSize: 25, fontFamily: "HelveticaneueLight"),
-            ),
-          ),
           SizedBox(
             height: 20,
           ),
@@ -103,22 +98,26 @@ class BuildFillTransactionForm extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          // Row(
-          //   children: [
-          //     Expanded(
-          //       child: TextField(
-          //         decoration: InputDecoration(
-          //             icon: Icon(Icons.category),
-          //             hintText: "Select category",
-          //             hintStyle: TextStyle(
-          //               color: Colors.grey,
-          //               fontSize: 22,
-          //             )),
-          //         controller: categoryTextController,
-          //       ),
-          //     )
-          //   ],
-          // ),
+          Row(children: [
+            Icon(Icons.category),
+            SizedBox(
+              width: 15,
+            ),
+            Expanded(
+              child: TextField(
+                readOnly: true,
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ChooseCategoryPage()));
+                },
+                decoration: InputDecoration(
+                    hintText: "Chọn danh mục",
+                    hintStyle: TextStyle(fontSize: 22, color: Colors.grey)),
+              ),
+            ),
+          ]),
           SizedBox(
             height: 20,
           ),
@@ -148,27 +147,6 @@ class BuildFillTransactionForm extends StatelessWidget {
               width: 20,
             ),
             CustomDatePicker(),
-          ]),
-          Row(children: [
-            // SizedBox(width: 300, height: 200, child: CustomDropdownTextField()),
-            Expanded(
-                child: DropDownField(
-              controller: categoryTextController,
-              icon: Icon(Icons.category),
-              labelText: "Choose a Category",
-              hintText: "Other",
-              itemsVisibleInDropdown: 6,
-              strict: false,
-              items: <String>[
-                'Food',
-                'Drink',
-                'Transportation',
-                'Household',
-                'Bill',
-                'Other',
-              ],
-              textStyle: TextStyle(fontSize: 18),
-            )),
           ]),
           SizedBox(
             height: 30,

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/core/databaseQuery.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:money_manager/ui/customWidget/customImageFromAsset.dart';
+import 'package:money_manager/ui/page/editTransactionPage.dart';
 
 // class EditTransaction extends StatefulWidget {
 //   @override
 //   _EditTransactionState createState() => _EditTransactionState();
 // }
 
-class EditTransaction extends StatelessWidget {
+class ViewTransactionDetail extends StatelessWidget {
   final int transactionId;
   final String transactionSubCategory;
   final String transactionIcon;
@@ -15,7 +17,7 @@ class EditTransaction extends StatelessWidget {
   final String transactionDate;
   final String transactionNote;
 
-  EditTransaction({
+  ViewTransactionDetail({
     Key key,
     @required this.transactionId,
     @required this.transactionSubCategory,
@@ -24,7 +26,7 @@ class EditTransaction extends StatelessWidget {
     @required this.transactionDate,
     @required this.transactionNote,
   }) : super(key: key);
-  QueryMMTransaction _query = new QueryMMTransaction();
+  final QueryMMTransaction _query = new QueryMMTransaction();
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +49,39 @@ class EditTransaction extends StatelessWidget {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Icon(Icons.arrow_back_rounded)),
+                          child: Tooltip(
+                              message: "Quay về trang trước đó",
+                              child: Icon(Icons.arrow_back_rounded))),
                       Spacer(),
-                      FlatButton(onPressed: () {}, child: Icon(Icons.edit)),
+                      FlatButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditTransaction(
+                                          transactionId: transactionId,
+                                          transactionSubCategory:
+                                              transactionSubCategory,
+                                          transactionIcon: transactionIcon,
+                                          transactionAmount: transactionAmount,
+                                          transactionDate: transactionDate,
+                                          transactionNote: transactionNote,
+                                        )));
+                          },
+                          onLongPress: () {
+                            _showToast('Chỉnh sửa giao dịch này');
+                          },
+                          child: Icon(Icons.edit)),
                       FlatButton(
                           onPressed: () {
                             print('Button Delete is pressed');
                             _deleteThisTransaction(transactionId);
+                            _showToast('Xoá thành công');
+                            Navigator.pop(context);
                           },
-                          child: Icon(Icons.delete)),
+                          child: Tooltip(
+                              message: "Xoá giao dịch này",
+                              child: Icon(Icons.delete))),
                     ],
                   ),
                   Divider(
@@ -132,8 +158,19 @@ class EditTransaction extends StatelessWidget {
     //String textToSendBack = textFieldController.text;
     //Navigator.pop(context, textToSendBack);
   }
-  void _deleteThisTransaction(int id) {
+  void _deleteThisTransaction(int id) async {
     print('Invoke delete transaction command');
-    _query.deleteATransaction(id);
+    await _query.deleteATransaction(id);
+  }
+
+  void _showToast(String text) {
+    Fluttertoast.showToast(
+        msg: text,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.grey[400],
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 }

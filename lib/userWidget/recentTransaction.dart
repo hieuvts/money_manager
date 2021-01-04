@@ -31,7 +31,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List>(
-        future: _query.getAllCategory(),
+        future: _query.getAllTransaction(),
         initialData: List(),
         builder: (context, snapshot) {
           return Container(
@@ -279,7 +279,8 @@ class _RecentTransactionState extends State<RecentTransaction> {
     transactionNote = data.transactionNote;
     var getDateTime =
         DateFormat("dd/MM/yyyy", "vi_VN").parse(data.transactionDate);
-    transactionDate = getDateTime.toString();
+    var _transactionDate = DateFormat.yMMMMd('vi_VN').format(getDateTime);
+    transactionDate = _transactionDate;
   }
 
   //Chờ lấy các giá trị từ màn hình "Chỉnh sửa thông tin giao dịch"
@@ -294,7 +295,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
     var result = await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => EditTransaction(
+            builder: (context) => ViewTransactionDetail(
                   transactionId: transactionId,
                   transactionSubCategory: transactionSubCategory,
                   transactionIcon: transactionIcon,
