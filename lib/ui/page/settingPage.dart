@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:money_manager/core/dateFormatter.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -9,6 +11,7 @@ class _SettingPageState extends State<SettingPage> {
   var _biggerText = TextStyle(fontSize: 20);
   @override
   Widget build(BuildContext context) {
+    var _date = getVietnameseDateTime("2021-12-01");
     var deviceData = MediaQuery.of(context).size;
     return Column(
       children: [
@@ -30,6 +33,7 @@ class _SettingPageState extends State<SettingPage> {
                 "Ứng dụng quản lí thu chi cá nhân",
                 style: _biggerText,
               ),
+              Text(_date),
               Spacer(),
             ],
           ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/userWidget/incomeAndOutcome.dart';
-import 'package:money_manager/userWidget/RecentTransaction.dart';
+import 'package:money_manager/userWidget/recentTransaction.dart';
 
 class TransactionPage extends StatefulWidget {
   @override

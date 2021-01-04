@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:money_manager/core/databaseModels.dart';
 import 'package:money_manager/core/databaseQuery.dart';
@@ -134,7 +136,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
                                                                   updateTransactionValue(
                                                                       snapshot.data[
                                                                           index]);
-                                                                  _awaitValueFromEditTransactionScr(
+                                                                  _awaitValueFromViewTransactionScr(
                                                                     context,
                                                                     transactionId,
                                                                     transactionSubCategoryId,
@@ -170,7 +172,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
 
   Widget buildDayOfTransaction(MMTransaction data) {
     var getDateTime =
-        DateFormat("dd/MM/yyyy", "vi_VN").parse(data.transactionDate);
+        DateFormat("yyyy-MM-dd", "en_US").parse(data.transactionDate);
     return Padding(
         padding: const EdgeInsets.only(left: 15.0),
         child: Align(
@@ -184,7 +186,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
 
   Widget buildWeekdayOfTransaction(MMTransaction data) {
     var getDateTime =
-        DateFormat("dd/MM/yyyy", "vi_VN").parse(data.transactionDate);
+        DateFormat("yyyy-MM-dd", "en_US").parse(data.transactionDate);
     return Padding(
         padding: const EdgeInsets.only(left: 15.0),
         child: Align(
@@ -198,7 +200,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
 
   Widget buildMonthYearOfTransaction(MMTransaction data) {
     var getDateTime =
-        DateFormat("dd/MM/yyyy", "vi_VN").parse(data.transactionDate);
+        DateFormat("yyyy-MM-dd", "en_US").parse(data.transactionDate);
     return Padding(
         padding: const EdgeInsets.only(left: 15.0),
         child: Align(
@@ -275,14 +277,16 @@ class _RecentTransactionState extends State<RecentTransaction> {
     transactionIcon = data.transactionIcon;
     transactionAmount = data.transactionAmount;
     transactionNote = data.transactionNote;
-    var getDateTime =
-        DateFormat("dd/MM/yyyy", "vi_VN").parse(data.transactionDate);
+    var getDateTime = DateFormat("yyyy-MM-dd", "en_US").parse("2020-12-29");
     var _transactionDate = DateFormat.yMMMMd('vi_VN').format(getDateTime);
     transactionDate = _transactionDate;
+    log(data.transactionDate);
+    log(getDateTime.toString());
+    log(transactionDate);
   }
 
   //Chờ lấy các giá trị từ màn hình "Chỉnh sửa thông tin giao dịch"
-  void _awaitValueFromEditTransactionScr(
+  void _awaitValueFromViewTransactionScr(
       BuildContext context,
       int transactionId,
       int transactionSubCategory,
