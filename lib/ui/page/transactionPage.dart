@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/userWidget/incomeAndOutcome.dart';
-import 'package:money_manager/userWidget/OldrecentTransaction.dart';
 import 'package:money_manager/userWidget/RecentTransaction.dart';
 
 class TransactionPage extends StatefulWidget {

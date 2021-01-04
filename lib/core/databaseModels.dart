@@ -57,7 +57,7 @@ class MMsubCategory {
 //MM -> MoneyManager
 class MMTransaction {
   int transactionId;
-  String transactionSubCategory;
+  int transactionSubCategoryId;
   String transactionAmount;
   String transactionIcon;
   String transactionDate;
@@ -65,7 +65,7 @@ class MMTransaction {
 
   MMTransaction(
       this.transactionId,
-      this.transactionSubCategory,
+      this.transactionSubCategoryId,
       this.transactionAmount,
       this.transactionIcon,
       this.transactionDate,
@@ -73,7 +73,7 @@ class MMTransaction {
 
   MMTransaction.fromMap(dynamic obj) {
     this.transactionId = obj['transactionId'];
-    this.transactionSubCategory = obj['subCategoryName'];
+    this.transactionSubCategoryId = obj['transactionSubCategoryId'];
     this.transactionAmount = obj['transactionAmount'];
     this.transactionIcon = obj['transactionIcon'];
     this.transactionDate = obj['transactionDate'];
@@ -81,7 +81,7 @@ class MMTransaction {
   }
 
   int get getTransactionId => transactionId;
-  String get getTransactionSubCategory => transactionSubCategory;
+  int get getTransactionSubCategory => transactionSubCategoryId;
   String get getTransactionAmount => transactionAmount;
   String get getTransactionIcon => transactionIcon;
   String get getTransactionDate => transactionDate;
@@ -90,7 +90,7 @@ class MMTransaction {
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
     map["transactionId"] = transactionId;
-    map["transactionSubCategory"] = transactionSubCategory;
+    map["transactionSubCategoryId"] = transactionSubCategoryId;
     map["transactionAmount"] = transactionAmount;
     map["transactionIcon"] = transactionIcon;
     map["transactionDate"] = transactionDate;

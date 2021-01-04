@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/core/databaseModels.dart';
 import 'package:money_manager/core/databaseQuery.dart';
+import 'package:money_manager/core/getSubCategoryName.dart';
 import 'package:money_manager/core/transactionExampleData.dart';
 import 'package:money_manager/core/moneyFormatter.dart';
 import 'package:money_manager/userWidget/viewTransactionDetail.dart';
@@ -15,7 +16,7 @@ class RecentTransaction extends StatefulWidget {
 
 class _RecentTransactionState extends State<RecentTransaction> {
   int transactionId;
-  String transactionSubCategory;
+  int transactionSubCategoryId;
   String transactionIcon;
   String transactionAmount;
   String transactionDate;
@@ -23,7 +24,6 @@ class _RecentTransactionState extends State<RecentTransaction> {
   final transactionData = TransactionData.getData;
   @override
   void setState(fn) {
-    // TODO: implement setState
     super.setState(fn);
   }
 
@@ -94,8 +94,6 @@ class _RecentTransactionState extends State<RecentTransaction> {
                                                     Spacer(
                                                       flex: 10,
                                                     ),
-                                                    buildTransactionNote(
-                                                        snapshot.data[index]),
                                                     SizedBox(
                                                       width: 10,
                                                     ),
@@ -139,7 +137,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
                                                                   _awaitValueFromEditTransactionScr(
                                                                     context,
                                                                     transactionId,
-                                                                    transactionSubCategory,
+                                                                    transactionSubCategoryId,
                                                                     transactionIcon,
                                                                     transactionAmount,
                                                                     transactionDate,
@@ -217,7 +215,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
       alignment: Alignment.centerLeft,
       child: RichText(
         text: TextSpan(
-          text: data.transactionSubCategory.toString(),
+          text: getSubCategoryName(data.transactionSubCategoryId),
           style: TextStyle(color: Colors.black, fontSize: 20),
         ),
       ),
@@ -273,7 +271,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
 
   void updateTransactionValue(MMTransaction data) {
     transactionId = data.transactionId;
-    transactionSubCategory = data.transactionSubCategory.toString();
+    transactionSubCategoryId = data.transactionSubCategoryId;
     transactionIcon = data.transactionIcon;
     transactionAmount = data.transactionAmount;
     transactionNote = data.transactionNote;
@@ -287,17 +285,17 @@ class _RecentTransactionState extends State<RecentTransaction> {
   void _awaitValueFromEditTransactionScr(
       BuildContext context,
       int transactionId,
-      String transactionSubCategory,
+      int transactionSubCategory,
       String transactionIcon,
       String transactionAmount,
       String transationDate,
       String transactionNote) async {
-    var result = await Navigator.push(
+    await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => ViewTransactionDetail(
                   transactionId: transactionId,
-                  transactionSubCategory: transactionSubCategory,
+                  transactionSubCategoryId: transactionSubCategoryId,
                   transactionIcon: transactionIcon,
                   transactionAmount: transactionAmount,
                   transactionDate: transactionDate,

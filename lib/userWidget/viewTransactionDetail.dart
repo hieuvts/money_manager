@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/core/databaseQuery.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:money_manager/core/getSubCategoryName.dart';
 import 'package:money_manager/ui/customWidget/customImageFromAsset.dart';
 import 'package:money_manager/ui/page/editTransactionPage.dart';
 
-// class EditTransaction extends StatefulWidget {
-//   @override
-//   _EditTransactionState createState() => _EditTransactionState();
-// }
-
-class ViewTransactionDetail extends StatelessWidget {
+class ViewTransactionDetail extends StatefulWidget {
   final int transactionId;
-  final String transactionSubCategory;
+  final int transactionSubCategoryId;
   final String transactionIcon;
   final String transactionAmount;
   final String transactionDate;
@@ -20,16 +16,26 @@ class ViewTransactionDetail extends StatelessWidget {
   ViewTransactionDetail({
     Key key,
     @required this.transactionId,
-    @required this.transactionSubCategory,
+    @required this.transactionSubCategoryId,
     @required this.transactionIcon,
     @required this.transactionAmount,
     @required this.transactionDate,
     @required this.transactionNote,
   }) : super(key: key);
-  final QueryMMTransaction _query = new QueryMMTransaction();
+  @override
+  _ViewTransactionDetailState createState() => _ViewTransactionDetailState();
+}
 
+class _ViewTransactionDetailState extends State<ViewTransactionDetail> {
+  final QueryMMTransaction _query = new QueryMMTransaction();
   @override
   Widget build(BuildContext context) {
+    int transactionId = widget.transactionId;
+    int transactionSubCategoryId = widget.transactionSubCategoryId;
+    String transactionIcon = widget.transactionIcon;
+    String transactionAmount = widget.transactionAmount;
+    String transactionDate = widget.transactionDate;
+    String transactionNote = widget.transactionNote;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -54,19 +60,20 @@ class ViewTransactionDetail extends StatelessWidget {
                               child: Icon(Icons.arrow_back_rounded))),
                       Spacer(),
                       FlatButton(
-                          onPressed: () {
-                            Navigator.push(
+                          onPressed: () async {
+                            await Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => EditTransaction(
                                           transactionId: transactionId,
-                                          transactionSubCategory:
-                                              transactionSubCategory,
+                                          transactionSubCategoryId:
+                                              transactionSubCategoryId,
                                           transactionIcon: transactionIcon,
                                           transactionAmount: transactionAmount,
                                           transactionDate: transactionDate,
                                           transactionNote: transactionNote,
                                         )));
+                            this.setState(() {});
                           },
                           onLongPress: () {
                             _showToast('Chỉnh sửa giao dịch này');
@@ -117,7 +124,8 @@ class ViewTransactionDetail extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Text(transactionSubCategory),
+                              Text(
+                                  getSubCategoryName(transactionSubCategoryId)),
                             ],
                           ),
                           SizedBox(
@@ -154,10 +162,6 @@ class ViewTransactionDetail extends StatelessWidget {
     );
   }
 
-  void _sendValueBack(BuildContext context) {
-    //String textToSendBack = textFieldController.text;
-    //Navigator.pop(context, textToSendBack);
-  }
   void _deleteThisTransaction(int id) async {
     print('Invoke delete transaction command');
     await _query.deleteATransaction(id);

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:money_manager/core/databaseModels.dart';
 import 'dart:async';
 import 'package:money_manager/core/databaseHelper.dart';
@@ -56,7 +58,7 @@ class QueryMMTransaction {
     var dbClient = await con.db;
     //var res = await dbClient.query("MMTransaction");
     var res = await dbClient.rawQuery(
-        'select transactionId, MMsubCategory.subCategoryName, transactionIcon, transactionAmount, transactionDate, transactionNote from MMTransaction, MMsubCategory where MMTransaction.transactionSubCategory=MMsubCategory.subCategoryId');
+        'select transactionId, transactionSubCategoryId, transactionIcon, transactionAmount, transactionDate, transactionNote from MMTransaction, MMsubCategory where MMTransaction.transactionSubCategoryId=MMsubCategory.subCategoryId');
     //raw SQL
 //     select transactionId, transactionAmount, MMsubCategory.subCategoryName,transactionDate, transactionIcon, transactionNote
 // from MMTransaction, MMsubCategory where MMTransaction.transactionSubCategory=MMsubCategory.subCategoryId
@@ -68,9 +70,8 @@ class QueryMMTransaction {
   }
 
   Future insertNewTransaction(
-      int id,
-      int transactionCategory,
-      double transactionAmount,
+      int transactionSubCategoryId,
+      String transactionAmount,
       String transactionIcon,
       String transactionDate,
       String transactionNote) async {
@@ -78,17 +79,18 @@ class QueryMMTransaction {
     await dbClient.insert(
         'MMTransaction',
         {
-          'transactionCategory': '$transactionCategory',
+          'transactionSubCategoryId': '$transactionSubCategoryId',
           'transactionAmount': '$transactionAmount',
           'transactionIcon': '$transactionIcon',
           'transactionDate': '$transactionDate',
           'transactionNote': '$transactionNote',
         },
         conflictAlgorithm: ConflictAlgorithm.replace);
+    log('transactionSubCategoryId: $transactionSubCategoryId, transactionAmount: $transactionAmount, transactionIcon: $transactionIcon, transactionDate: $transactionDate, transactionNote: $transactionNote');
     //raw sql
 //         INSERT INTO MMTransaction($transactionSubCategory, $transactionAmount, $transactionIcon, $transactionDate, $transactionNote)
 // VALUES (4, '3000', 'images/parking.png', '29/12/2020', 'Bike parking 2')
-    print("Row $id has been added");
+    print("Row has been added");
   }
 
   Future deleteATransaction(int id) async {
@@ -101,7 +103,8 @@ class QueryMMTransaction {
 
   Future updateATransaction(
       int id,
-      double transactionAmount,
+      int transactionSubCategoryId,
+      String transactionAmount,
       String transactionIcon,
       String transactionDate,
       String transactionNote) async {
@@ -110,6 +113,7 @@ class QueryMMTransaction {
         'MMTransaction',
         {
           'transactionAmount': '$transactionAmount',
+          'transactionSubCategoryId': '$transactionSubCategoryId',
           'transactionIcon': '$transactionIcon',
           'transactionDate': '$transactionDate',
           'transactionNote': '$transactionNote',
@@ -117,6 +121,7 @@ class QueryMMTransaction {
         where: 'transactionId = ?',
         whereArgs: [id],
         conflictAlgorithm: ConflictAlgorithm.replace);
+    log('id: $id transactionSubCategoryId: $transactionSubCategoryId, transactionAmount: $transactionAmount, transactionIcon: $transactionIcon, transactionDate: $transactionDate, transactionNote: $transactionNote');
     print("Update row $id");
     print("$count row has been updated");
   }
