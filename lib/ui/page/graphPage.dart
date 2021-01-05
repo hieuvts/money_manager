@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_manager/ui/customWidget/expense_chart.dart';
+import 'package:money_manager/userWidget/expense_chart.dart';
 
 class GraphPage extends StatefulWidget {
   @override
@@ -9,6 +9,14 @@ class GraphPage extends StatefulWidget {
 class _GraphPageState extends State<GraphPage> {
   @override
   Widget build(BuildContext context) {
-    return PageView(scrollDirection: Axis.vertical, children: [ExpenseChart()]);
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        title: Text("Biểu đồ thống kê"),
+        backgroundColor: Colors.lightBlue,
+      ),
+      body:
+          PageView(scrollDirection: Axis.vertical, children: [ExpenseChart()]),
+    );
   }
 }

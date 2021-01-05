@@ -16,12 +16,18 @@ class AddTransactionPage extends StatefulWidget {
 class _AddTransactionPageState extends State<AddTransactionPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-      child: Card(
-        elevation: 3,
-        child: SingleChildScrollView(
-            padding: EdgeInsets.all(10), child: BuildFillTransactionForm()),
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        title: Text("Thêm giao dịch mới"),
+      ),
+      body: Container(
+        padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+        child: Card(
+          elevation: 3,
+          child: SingleChildScrollView(
+              padding: EdgeInsets.all(10), child: BuildFillTransactionForm()),
+        ),
       ),
     );
   }
@@ -199,7 +205,7 @@ class _BuildFillTransactionFormState extends State<BuildFillTransactionForm> {
   }
 
   void _addATransaction() async {
-    transactionDate = DateFormat("dd/MM/yyyy", "vi_VN").format(selectedDate);
+    transactionDate = DateFormat("dd-MM-yyyy", "vi_VN").format(selectedDate);
     log('Invoked _addATransaction');
     await _query.insertNewTransaction(
         transactionSubCategory,

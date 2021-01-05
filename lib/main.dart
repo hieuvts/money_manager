@@ -19,6 +19,8 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       theme: ThemeData(
         fontFamily: "Helveticaneue",
+        accentColor: Colors.blueAccent,
+        primaryColor: Colors.lightBlue,
         // elevatedButtonTheme: ElevatedButtonThemeData(
         //   style: ElevatedButton.styleFrom(
         //     primary: Colors.teal,
@@ -33,6 +35,7 @@ class MyApp extends StatelessWidget {
         navigateAfterSeconds: new PageController(),
         title: new Text(
           'Money Management',
+          textAlign: TextAlign.center,
           style: new TextStyle(
               fontWeight: FontWeight.bold, fontSize: 40.0, color: Colors.white),
         ),
@@ -78,14 +81,46 @@ class _PageControllerState extends State<PageController> {
         title: Text(appBarTitle),
       ),
       body: _pages[_selectedPage],
-      bottomNavigationBar: SnakeNavigationBar.color(
-        behaviour: SnakeBarBehaviour.pinned,
-        //padding: EdgeInsets.all(1),
-        snakeShape: SnakeShape.circle,
-        snakeViewColor: Colors.blueAccent[100],
-        currentIndex: _selectedPage,
-        onTap: onItemTapped,
-        items: navigationBarItem,
+      // bottomNavigationBar: SnakeNavigationBar.color(
+      //   behaviour: SnakeBarBehaviour.pinned,
+      //   //padding: EdgeInsets.all(1),
+      //   snakeShape: SnakeShape.circle,
+      //   snakeViewColor: Colors.blueAccent[100],
+      //   currentIndex: _selectedPage,
+      //   onTap: onItemTapped,
+      //   items: navigationBarItem,
+      // ),
+      floatingActionButton: FloatingActionButton.extended(
+        elevation: 4.0,
+        icon: const Icon(Icons.add),
+        label: const Text('Giao dịch'),
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddTransactionPage()));
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.white,
+        shape: AutomaticNotchedShape(
+            RoundedRectangleBorder(), StadiumBorder(side: BorderSide())),
+        notchMargin: 4.0,
+        child: new Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(Icons.home),
+              onPressed: () {},
+            ),
+            IconButton(
+                icon: Icon(Icons.bar_chart),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => GraphPage()));
+                }),
+          ],
+        ),
       ),
     ));
   }

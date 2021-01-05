@@ -2,15 +2,19 @@ class MMCategory {
   int categoryId;
   String categoryName;
   String categoryIcon;
-
-  MMCategory(this.categoryId, this.categoryName, this.categoryIcon);
+  int transactionAmount;
+  MMCategory(this.categoryId, this.categoryName, this.categoryIcon,
+      this.transactionAmount);
 
   MMCategory.fromMap(dynamic obj) {
     this.categoryId = obj['categoryId'];
     this.categoryName = obj['categoryName'];
     this.categoryIcon = obj['categoryIcon'];
   }
-
+  MMCategory.fromIDandAmount(dynamic obj) {
+    this.categoryName = obj['categoryName'];
+    this.transactionAmount = obj['transactionAmount'];
+  }
   int get getCategoryId => categoryId;
   String get getCategoryName => categoryName;
   String get getCategoryIcon => categoryIcon;
@@ -79,7 +83,9 @@ class MMTransaction {
     this.transactionDate = obj['transactionDate'];
     this.transactionNote = obj['transactionNote'];
   }
-
+  MMTransaction.fromMapDateOnly(dynamic obj) {
+    this.transactionDate = obj['transactionDate'];
+  }
   int get getTransactionId => transactionId;
   int get getTransactionSubCategory => transactionSubCategoryId;
   String get getTransactionAmount => transactionAmount;

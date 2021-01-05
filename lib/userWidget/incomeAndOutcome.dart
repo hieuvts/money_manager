@@ -14,52 +14,47 @@ class _IncomeAndOutcomeState extends State<IncomeAndOutcome> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(0),
-        ),
-        child: Container(
-            alignment: Alignment.center,
-            child: Column(children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        padding: EdgeInsets.all(5),
+        alignment: Alignment.center,
+        child: Column(children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
                 children: [
-                  Column(
-                    children: [
-                      Text('Inflow', style: customTextStyle),
-                      Divider(),
-                      Text('  Outflow', style: customTextStyle)
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text('+ ' + moneyFormater(_inflow),
-                          style: TextStyle(fontSize: 18, color: Colors.green)),
-                      Divider(),
-                      Text('- ' + moneyFormater(_outflow),
-                          style: TextStyle(fontSize: 18, color: Colors.red))
-                    ],
-                  ),
+                  Text('Inflow', style: customTextStyle),
+                  Divider(),
+                  Text('  Outflow', style: customTextStyle)
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+              Column(
                 children: [
-                  Text(
-                    "______________________",
-                    style: TextStyle(color: Colors.grey),
-                  )
+                  Text('+ ' + moneyFormater(_inflow),
+                      style: TextStyle(fontSize: 18, color: Colors.green)),
+                  Divider(),
+                  Text('- ' + moneyFormater(_outflow),
+                      style: TextStyle(fontSize: 18, color: Colors.red))
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  new Padding(padding: EdgeInsets.all(15)),
-                  Text(moneyFormater(_sum),
-                      style: TextStyle(fontSize: 18, color: Colors.black))
-                ],
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                "______________________",
+                style: TextStyle(color: Colors.grey),
               )
-            ])));
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              new Padding(padding: EdgeInsets.all(15)),
+              Text(moneyFormater(_sum),
+                  style: TextStyle(fontSize: 18, color: Colors.black))
+            ],
+          )
+        ]));
   }
 }

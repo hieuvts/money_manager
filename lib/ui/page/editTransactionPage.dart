@@ -220,7 +220,7 @@ class _EditTransactionState extends State<EditTransaction> {
 
   void _updateTransaction() async {
     widget.transactionDate =
-        DateFormat("dd/MM/yyyy", "vi_VN").format(selectedDate);
+        DateFormat("dd-MM-yyyy", "vi_VN").format(selectedDate);
     //transactionDate = DateFormat("dd/MM/yyyy", "vi_VN").format(selectedDate);
     log('Invoked _addATransaction');
     await _query.updateATransaction(

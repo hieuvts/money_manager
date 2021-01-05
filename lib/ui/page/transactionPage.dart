@@ -23,6 +23,9 @@ class _TransactionPageState extends State<TransactionPage> {
           Divider(
             thickness: 2,
           ),
+          SizedBox(
+            height: 10,
+          ),
           Expanded(child: RecentTransaction()), //CustomCardView
         ]),
       ],

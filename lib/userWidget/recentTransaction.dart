@@ -7,6 +7,7 @@ import 'package:money_manager/core/getSubCategoryName.dart';
 import 'package:money_manager/core/transactionExampleData.dart';
 import 'package:money_manager/core/moneyFormatter.dart';
 import 'package:money_manager/userWidget/viewTransactionDetail.dart';
+import 'package:money_manager/core/getContainerHeight.dart';
 import 'package:intl/intl.dart';
 
 DateTime now = DateTime.now();
@@ -33,7 +34,8 @@ class _RecentTransactionState extends State<RecentTransaction> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List>(
-        future: _query.getAllTransaction(),
+        //future: _query.getAllTransaction(),
+        future: _query.getTransactionByDate(),
         initialData: List(),
         builder: (context, snapshot) {
           return Container(
@@ -42,127 +44,129 @@ class _RecentTransactionState extends State<RecentTransaction> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Expanded(
-                  child: ListView.builder(
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          //padding: EdgeInsets.fromLTRB(5, 8, 8, 0),
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          height: 372, //Chiều cao của mỗi card
-                          width: double.maxFinite,
-                          child: Card(
-                            elevation: 5,
-                            child: Container(
-                              child: Padding(
-                                padding: EdgeInsets.all(1),
-                                child: Stack(children: <Widget>[
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Stack(
-                                      children: <Widget>[
-                                        Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 5),
-                                            child: Column(
-                                              children: <Widget>[
-                                                Row(
-                                                  children: <Widget>[
-                                                    buildDayOfTransaction(
-                                                        snapshot.data[index]),
-                                                    Spacer(
-                                                      flex: 2,
-                                                    ),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        //Format WEEKDAY
-                                                        buildWeekdayOfTransaction(
-                                                            snapshot
-                                                                .data[index]),
-                                                        //Format YEAR_MONTH
-                                                        buildMonthYearOfTransaction(
-                                                            snapshot
-                                                                .data[index]),
-                                                      ],
-                                                    ),
-                                                    Spacer(
-                                                      flex: 1,
-                                                    ),
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    Spacer(
-                                                      flex: 10,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                  ],
-                                                ),
-                                                Divider(
-                                                  thickness: 2.0,
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    Container(
-                                                      height: 290,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width -
-                                                              20,
-                                                      child: ListView.builder(
-                                                          physics:
-                                                              const NeverScrollableScrollPhysics(),
-                                                          itemCount: 5,
-                                                          itemBuilder:
-                                                              (context1,
-                                                                  index1) {
-                                                            return ListTile(
-                                                                leading: buildTransactionIcon(
-                                                                    snapshot.data[
-                                                                        index]),
-                                                                title: buildTransactionSubCategory(
-                                                                    snapshot.data[
-                                                                        index]),
-                                                                trailing: buildTransactionAmount(
-                                                                    snapshot.data[
-                                                                        index]),
-                                                                onTap: () {
-                                                                  updateTransactionValue(
-                                                                      snapshot.data[
-                                                                          index]);
-                                                                  _awaitValueFromViewTransactionScr(
-                                                                    context,
-                                                                    transactionId,
-                                                                    transactionSubCategoryId,
-                                                                    transactionIcon,
-                                                                    transactionAmount,
-                                                                    transactionDate,
-                                                                    transactionNote,
-                                                                  );
-                                                                  print(
-                                                                      "Tapped");
-                                                                });
-                                                          }),
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
-                                            ))
-                                      ],
-                                    ),
-                                  )
-                                ]),
+                  child: Scrollbar(
+                    thickness: 3,
+                    child: ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            //height: 250, //Chiều cao của mỗi card
+                            width: double.maxFinite,
+                            child: Card(
+                              elevation: 5,
+                              child: Container(
+                                child: Stack(
+                                  children: <Widget>[
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Stack(
+                                        children: <Widget>[
+                                          Padding(
+                                              padding:
+                                                  const EdgeInsets.only(top: 5),
+                                              child: Column(
+                                                children: <Widget>[
+                                                  Row(
+                                                    children: <Widget>[
+                                                      buildDayOfTransaction(
+                                                          snapshot.data[index]),
+                                                      Spacer(
+                                                        flex: 1,
+                                                      ),
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          //Format WEEKDAY
+                                                          buildWeekdayOfTransaction(
+                                                              snapshot
+                                                                  .data[index]),
+                                                          //Format YEAR_MONTH
+                                                          buildMonthYearOfTransaction(
+                                                              snapshot
+                                                                  .data[index]),
+                                                        ],
+                                                      ),
+                                                      Spacer(
+                                                        flex: 10,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Divider(
+                                                    thickness: 2.0,
+                                                  ),
+                                                  FutureBuilder<List>(
+                                                      future: _query
+                                                          .getAllTransactionIn(
+                                                              snapshot
+                                                                  .data[index]
+                                                                  .transactionDate),
+                                                      initialData: List(),
+                                                      builder:
+                                                          (context, _snapshot) {
+                                                        return Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: <Widget>[
+                                                            Container(
+                                                              height:
+                                                                  getContainerHeight(
+                                                                      _snapshot
+                                                                          .data
+                                                                          .length),
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width -
+                                                                  20,
+                                                              child: ListView
+                                                                  .builder(
+                                                                      physics:
+                                                                          const NeverScrollableScrollPhysics(),
+                                                                      itemCount: _snapshot
+                                                                          .data
+                                                                          .length,
+                                                                      itemBuilder:
+                                                                          (snapshot,
+                                                                              index) {
+                                                                        return ListTile(
+                                                                            leading:
+                                                                                buildTransactionIcon(_snapshot.data[index]),
+                                                                            title: buildTransactionSubCategory(_snapshot.data[index]),
+                                                                            trailing: buildTransactionAmount(_snapshot.data[index]),
+                                                                            onTap: () {
+                                                                              updateTransactionValue(_snapshot.data[index]);
+                                                                              _awaitValueFromViewTransactionScr(
+                                                                                context,
+                                                                                transactionId,
+                                                                                transactionSubCategoryId,
+                                                                                transactionIcon,
+                                                                                transactionAmount,
+                                                                                transactionDate,
+                                                                                transactionNote,
+                                                                              );
+                                                                              print("Tapped");
+                                                                            });
+                                                                      }),
+                                                            )
+                                                          ],
+                                                        );
+                                                      }),
+                                                ],
+                                              ))
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }),
+                          );
+                        }),
+                  ),
                 ),
               ],
             ),
@@ -218,7 +222,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
       child: RichText(
         text: TextSpan(
           text: getSubCategoryName(data.transactionSubCategoryId),
-          style: TextStyle(color: Colors.black, fontSize: 20),
+          style: TextStyle(color: Colors.black, fontSize: 19),
         ),
       ),
     );
@@ -253,6 +257,8 @@ class _RecentTransactionState extends State<RecentTransaction> {
       padding: const EdgeInsets.all(10.0),
       child: Image.asset(
         data.transactionIcon,
+        width: 25,
+        height: 25,
         fit: BoxFit.fitHeight,
       ),
     );
@@ -265,7 +271,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
         text: moneyFormater(data.transactionAmount),
         style: TextStyle(
           color: Colors.grey[600],
-          fontSize: 20,
+          fontSize: 18,
         ),
       ),
     );

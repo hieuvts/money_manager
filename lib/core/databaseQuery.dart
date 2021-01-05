@@ -18,6 +18,23 @@ class QueryMMCategory {
     return list;
   }
 
+  //TODO
+  var queryGetCategoryAmount = '''
+  select sum(MMTransaction.transactionAmount) as 'transactionAmount',MMCategory.categoryName from MMCategory, MMsubCategory, MMTransaction 
+where (MMCategory.categoryId=MMsubCategory.categoryIdFK and MMsubCategory.subCategoryId=MMTransaction.transactionSubCategoryId)
+GROUP BY MMCategory.categoryId
+  ''';
+  Future<List<MMCategory>> getCategoryAmount() async {
+    var dbClient = await con.db;
+    var res = await dbClient.rawQuery(queryGetCategoryAmount);
+
+    List<MMCategory> list = res.isNotEmpty
+        ? res.map((c) => MMCategory.fromIDandAmount(c)).toList()
+        : null;
+
+    return list;
+  }
+
   Future insertNewCategory(int id, String categoryName) async {
     var dbClient = await con.db;
     await dbClient.insert(
@@ -56,12 +73,29 @@ class QueryMMTransaction {
 
   Future<List<MMTransaction>> getAllTransaction() async {
     var dbClient = await con.db;
-    //var res = await dbClient.query("MMTransaction");
     var res = await dbClient.rawQuery(
         'select transactionId, transactionSubCategoryId, transactionIcon, transactionAmount, transactionDate, transactionNote from MMTransaction, MMsubCategory where MMTransaction.transactionSubCategoryId=MMsubCategory.subCategoryId');
-    //raw SQL
-//     select transactionId, transactionAmount, MMsubCategory.subCategoryName,transactionDate, transactionIcon, transactionNote
-// from MMTransaction, MMsubCategory where MMTransaction.transactionSubCategory=MMsubCategory.subCategoryId
+    List<MMTransaction> list = res.isNotEmpty
+        ? res.map((c) => MMTransaction.fromMap(c)).toList()
+        : null;
+    return list;
+  }
+
+  Future<List<MMTransaction>> getTransactionByDate() async {
+    var dbClient = await con.db;
+    var res = await dbClient.rawQuery(
+        'select DISTINCT(transactionDate) from MMTransaction order by date(transactionDate) DESC');
+    List<MMTransaction> list = res.isNotEmpty
+        ? res.map((c) => MMTransaction.fromMapDateOnly(c)).toList()
+        : null;
+    return list;
+  }
+
+  Future<List<MMTransaction>> getAllTransactionIn(String date) async {
+    log('$date');
+    var dbClient = await con.db;
+    var res = await dbClient.rawQuery(
+        "select * from MMTransaction where transactionDate = '$date'");
     List<MMTransaction> list = res.isNotEmpty
         ? res.map((c) => MMTransaction.fromMap(c)).toList()
         : null;
