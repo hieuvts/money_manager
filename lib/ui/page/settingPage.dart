@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:money_manager/core/dateFormatter.dart';
 
 class SettingPage extends StatefulWidget {

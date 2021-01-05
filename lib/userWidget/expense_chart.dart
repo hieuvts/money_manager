@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:money_manager/core/chartExampleData.dart';
-import 'package:money_manager/ui/customWidget/customBarChart.dart';
 import 'package:money_manager/core/databaseModels.dart';
 import 'package:money_manager/core/databaseQuery.dart';
 
@@ -12,8 +9,6 @@ class ExpenseChart extends StatefulWidget {
   _ExpenseChartState createState() => _ExpenseChartState();
 }
 
-// final incomeData = ChartExampleData.incomeData;
-// final expenseData = ChartExampleData.expenseData;
 final categoryData = ChartExampleData.categoryData;
 QueryMMCategory _query = new QueryMMCategory();
 
@@ -83,7 +78,6 @@ class _ExpenseChartState extends State<ExpenseChart> {
                   ),
                 ),
               ),
-              //Container(child: CustomBarChart(data: categoryData)),
             ],
           );
         });

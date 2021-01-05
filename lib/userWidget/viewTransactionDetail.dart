@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:money_manager/core/getSubCategoryName.dart';
 import 'package:money_manager/ui/customWidget/customImageFromAsset.dart';
 import 'package:money_manager/ui/page/editTransactionPage.dart';
+import 'package:money_manager/core/moneyFormatter.dart';
 
 class ViewTransactionDetail extends StatefulWidget {
   final int transactionId;
@@ -132,7 +133,7 @@ class _ViewTransactionDetailState extends State<ViewTransactionDetail> {
                             height: 15,
                           ),
                           Text(
-                            transactionAmount,
+                            moneyFormater(transactionAmount),
                             style: TextStyle(color: Colors.red, fontSize: 28),
                           ),
                           SizedBox(

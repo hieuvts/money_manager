@@ -12,6 +12,12 @@ class ChooseCategoryPage extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          bottom: TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.north)),
+              Tab(icon: Icon(Icons.south)),
+            ],
+          ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -517,29 +523,3 @@ class ChooseCategoryPage extends StatelessWidget {
     Navigator.pop(context, chosenCategory);
   }
 }
-
-// class BuildSpendCategory extends StatelessWidget {
-//   final _boldFont = TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
-//   final _biggerFont = TextStyle(fontSize: 16);
-//   @override
-//   Widget build(BuildContext context) {
-//     return
-//   }
-
-//   void _sendValueBack(BuildContext context, int chosenCategory) {
-//     Navigator.pop(context, chosenCategory);
-//   }
-// }
-
-// class BuildIncomeCategory extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       child:
-//     );
-//   }
-
-//   void _sendValueBack(BuildContext context, int chosenCategory) {
-//     Navigator.pop(context, chosenCategory);
-//   }
-// }

@@ -163,7 +163,8 @@ class _EditTransactionState extends State<EditTransaction> {
                             child: IgnorePointer(
                               child: new TextFormField(
                                 decoration: new InputDecoration(
-                                  hintText: widget.transactionDate,
+                                  hintText: DateFormat("dd/MM/yyyy", "vi_VN")
+                                      .format(selectedDate),
                                   hintStyle: TextStyle(
                                       color: Colors.grey, fontSize: 22),
                                 ),
@@ -188,6 +189,11 @@ class _EditTransactionState extends State<EditTransaction> {
                                     msg: "Thêm giao dịch mới thành công",
                                     toastLength: Toast.LENGTH_LONG);
                                 Navigator.pop(context);
+                                setState(() {
+                                  widget.transactionDate =
+                                      DateFormat("dd-MM-yyyy", "vi_VN")
+                                          .format(selectedDate);
+                                });
                               },
                               icon: Icon(Icons.save, size: 40),
                               label: Text(
@@ -219,16 +225,15 @@ class _EditTransactionState extends State<EditTransaction> {
   }
 
   void _updateTransaction() async {
-    widget.transactionDate =
-        DateFormat("dd-MM-yyyy", "vi_VN").format(selectedDate);
-    //transactionDate = DateFormat("dd/MM/yyyy", "vi_VN").format(selectedDate);
+    var _transactionDate =
+        DateFormat("yyyy-MM-dd", "vi_VN").format(selectedDate);
     log('Invoked _addATransaction');
     await _query.updateATransaction(
         transactionId,
         widget.transactionSubCategoryId,
         transactionAmount.text,
         transactionIcon,
-        widget.transactionDate,
+        _transactionDate,
         transactionNote.text);
   }
 }

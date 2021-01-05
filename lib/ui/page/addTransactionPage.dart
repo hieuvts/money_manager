@@ -205,7 +205,7 @@ class _BuildFillTransactionFormState extends State<BuildFillTransactionForm> {
   }
 
   void _addATransaction() async {
-    transactionDate = DateFormat("dd-MM-yyyy", "vi_VN").format(selectedDate);
+    transactionDate = DateFormat("yyyy-MM-dd", "vi_VN").format(selectedDate);
     log('Invoked _addATransaction');
     await _query.insertNewTransaction(
         transactionSubCategory,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:money_manager/ui/page/addTransactionPage.dart';
 import 'ui/page/transactionPage.dart';
 import 'ui/page/graphPage.dart';
-import 'ui/page/settingPage.dart';
 import 'package:splashscreen/splashscreen.dart';
 import 'package:money_manager/core/bottomNavBarItem.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -56,14 +55,7 @@ class PageController extends StatefulWidget {
 class _PageControllerState extends State<PageController> {
   final navigationBarItem = NavBarItem.getNavBarItems;
   var appBarTitle = 'Money Manager';
-  //Danh sách các pages
-  // final List<Widget> _pages = <Widget>[
-  //   TransactionPage(),
-  //   GraphPage(),
-  //   AddTransactionPage(),
-  //   SettingPage()
-  // ];
-  int _selectedPage = 0;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
