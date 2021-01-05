@@ -20,7 +20,7 @@ class QueryMMCategory {
 
   //TODO
   var queryGetCategoryAmount = '''
-  select sum(MMTransaction.transactionAmount) as 'transactionAmount',MMCategory.categoryName from MMCategory, MMsubCategory, MMTransaction 
+  select MMCategory.categoryName, sum(MMTransaction.transactionAmount) as 'transactionAmount'from MMCategory, MMsubCategory, MMTransaction 
 where (MMCategory.categoryId=MMsubCategory.categoryIdFK and MMsubCategory.subCategoryId=MMTransaction.transactionSubCategoryId)
 GROUP BY MMCategory.categoryId
   ''';

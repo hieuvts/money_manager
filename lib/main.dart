@@ -3,7 +3,6 @@ import 'package:money_manager/ui/page/addTransactionPage.dart';
 import 'ui/page/transactionPage.dart';
 import 'ui/page/graphPage.dart';
 import 'ui/page/settingPage.dart';
-import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:splashscreen/splashscreen.dart';
 import 'package:money_manager/core/bottomNavBarItem.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -21,13 +20,6 @@ class MyApp extends StatelessWidget {
         fontFamily: "Helveticaneue",
         accentColor: Colors.blueAccent,
         primaryColor: Colors.lightBlue,
-        // elevatedButtonTheme: ElevatedButtonThemeData(
-        //   style: ElevatedButton.styleFrom(
-        //     primary: Colors.teal,
-        //     onPrimary: Colors.white,
-        //     onSurface: Colors.grey,
-        //   ),
-        // ),
       ), //Set font chung toàn bộ app
 
       home: new SplashScreen(
@@ -65,12 +57,12 @@ class _PageControllerState extends State<PageController> {
   final navigationBarItem = NavBarItem.getNavBarItems;
   var appBarTitle = 'Money Manager';
   //Danh sách các pages
-  final List<Widget> _pages = <Widget>[
-    TransactionPage(),
-    GraphPage(),
-    AddTransactionPage(),
-    SettingPage()
-  ];
+  // final List<Widget> _pages = <Widget>[
+  //   TransactionPage(),
+  //   GraphPage(),
+  //   AddTransactionPage(),
+  //   SettingPage()
+  // ];
   int _selectedPage = 0;
   @override
   Widget build(BuildContext context) {
@@ -80,20 +72,11 @@ class _PageControllerState extends State<PageController> {
       appBar: AppBar(
         title: Text(appBarTitle),
       ),
-      body: _pages[_selectedPage],
-      // bottomNavigationBar: SnakeNavigationBar.color(
-      //   behaviour: SnakeBarBehaviour.pinned,
-      //   //padding: EdgeInsets.all(1),
-      //   snakeShape: SnakeShape.circle,
-      //   snakeViewColor: Colors.blueAccent[100],
-      //   currentIndex: _selectedPage,
-      //   onTap: onItemTapped,
-      //   items: navigationBarItem,
-      // ),
-      floatingActionButton: FloatingActionButton.extended(
+      body: TransactionPage(),
+      floatingActionButton: FloatingActionButton(
         elevation: 4.0,
-        icon: const Icon(Icons.add),
-        label: const Text('Giao dịch'),
+        child: const Icon(Icons.add),
+        // label: const Text('Giao dịch'),
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AddTransactionPage()));
@@ -123,26 +106,5 @@ class _PageControllerState extends State<PageController> {
         ),
       ),
     ));
-  }
-
-  void onItemTapped(int index) {
-    setState(() {
-      switch (index) {
-        case 0:
-          appBarTitle = 'Money Manager';
-          break;
-        case 1:
-          appBarTitle = 'Thống kê lịch sử giao dịch';
-          break;
-        case 2:
-          appBarTitle = 'Thêm giao dịch mới';
-          break;
-        case 3:
-          appBarTitle = 'Cài đặt';
-          break;
-        default:
-      }
-      _selectedPage = index;
-    });
   }
 }

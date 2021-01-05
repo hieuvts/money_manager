@@ -12,33 +12,40 @@ class ExpenseChart extends StatefulWidget {
   _ExpenseChartState createState() => _ExpenseChartState();
 }
 
-final incomeData = ChartExampleData.incomeData;
-final expenseData = ChartExampleData.expenseData;
+// final incomeData = ChartExampleData.incomeData;
+// final expenseData = ChartExampleData.expenseData;
 final categoryData = ChartExampleData.categoryData;
 QueryMMCategory _query = new QueryMMCategory();
 
 class _ExpenseChartState extends State<ExpenseChart> {
   @override
   Widget build(BuildContext context) {
+    MMCategory _data;
     var deviceData = MediaQuery.of(context).size;
-    Map<String, double> _incomeData;
+
     return FutureBuilder<List>(
         future: _query.getCategoryAmount(),
         initialData: List(),
         builder: (context, snapshot) {
-          //log('Snapshot: ${snapshot.data[1]}');
-          _incomeData = Map.from(snapshot.data[1]);
-          log('$_incomeData');
+          final snapshotLength = snapshot.data.length;
+          Map<String, double> expenseData = {};
+          for (int i = 0; i < snapshotLength; i++) {
+            _data = snapshot.data[i];
+            var _categoryName = _data.categoryName;
+            var _categoryAmount = _data.transactionAmount.toDouble();
+            expenseData["$_categoryName"] = _categoryAmount;
+          }
           return ListView(
             children: [
               SizedBox(
                 height: 10,
               ),
               Container(
-                  padding: EdgeInsets.only(left: 20), child: Text("Inflow")),
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text("Biểu đồ thu nhập")),
               Container(
                 width: deviceData.width / 1,
-                height: deviceData.width / 1.5,
+                height: deviceData.width / 1.2,
                 child: Card(
                   child: PieChart(
                     legendOptions: LegendOptions(
@@ -48,18 +55,20 @@ class _ExpenseChartState extends State<ExpenseChart> {
                     chartValuesOptions: ChartValuesOptions(
                         showChartValuesInPercentage: true,
                         showChartValuesOutside: true),
-                    dataMap: incomeData,
+                    dataMap: expenseData,
                     chartType: ChartType.disc,
-                    centerText: "Income",
                   ),
                 ),
               ),
               Divider(),
               Container(
-                  padding: EdgeInsets.only(left: 20), child: Text("Expense")),
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text(
+                    "Biểu đồ chi tiêu",
+                  )),
               Container(
                 width: deviceData.width / 1,
-                height: deviceData.width / 1.5,
+                height: deviceData.width / 1.2,
                 child: Card(
                   child: PieChart(
                     legendOptions: LegendOptions(
@@ -70,12 +79,11 @@ class _ExpenseChartState extends State<ExpenseChart> {
                         showChartValuesOutside: true),
                     dataMap: expenseData,
                     chartType: ChartType.disc,
-                    centerText: "Expense",
                     chartRadius: deviceData.width,
                   ),
                 ),
               ),
-              Container(child: CustomBarChart(data: categoryData)),
+              //Container(child: CustomBarChart(data: categoryData)),
             ],
           );
         });

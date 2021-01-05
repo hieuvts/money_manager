@@ -12,7 +12,10 @@ class _GraphPageState extends State<GraphPage> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: Text("Biểu đồ thống kê"),
+        title: Text(
+          "Biểu đồ thống kê",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.lightBlue,
       ),
       body:

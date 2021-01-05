@@ -25,6 +25,18 @@ class MMCategory {
     map["categoryIcon"] = categoryIcon;
     return map;
   }
+
+  Map<String, dynamic> toMapOnlyNameAmount() {
+    // var map = new Map<String, dynamic>();
+    // return {
+    //   'categoryName': categoryName,
+    //   'transactionAmount': transactionAmount,
+    // };
+    var map = new Map<String, dynamic>();
+    map["categoryName"] = categoryName;
+    map["transactionAmount"] = transactionAmount;
+    return map;
+  }
 }
 
 class MMsubCategory {
