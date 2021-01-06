@@ -60,6 +60,21 @@ String getSubCategoryName(int id) {
     case 20:
       return "Khác";
       break;
+    case 30:
+      return "Lương";
+      break;
+    case 31:
+      return "Quà tặng";
+      break;
+    case 32:
+      return "Bán hàng";
+      break;
+    case 33:
+      return "Rút tiền từ ngân hàng";
+      break;
+    case 34:
+      return "Khác";
+      break;
     default:
       return "Khác";
       break;

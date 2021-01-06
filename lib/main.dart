@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       ), //Set font chung toàn bộ app
 
       home: new SplashScreen(
-        seconds: 0,
+        seconds: 2,
         navigateAfterSeconds: new PageController(),
         title: new Text(
           'Money Management',
@@ -67,11 +67,14 @@ class _PageControllerState extends State<PageController> {
       body: TransactionPage(),
       floatingActionButton: FloatingActionButton(
         elevation: 4.0,
-        child: const Icon(Icons.add),
-        // label: const Text('Giao dịch'),
-        onPressed: () {
-          Navigator.push(context,
+        child: const Icon(Icons.add, color: Colors.white),
+        tooltip: "Thêm giao dịch mới",
+        onPressed: () async {
+          final result = await Navigator.push(context,
               MaterialPageRoute(builder: (context) => AddTransactionPage()));
+          if (result) {
+            setState(() {});
+          }
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -85,11 +88,18 @@ class _PageControllerState extends State<PageController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             IconButton(
-              icon: Icon(Icons.home),
+              icon: Icon(
+                Icons.home,
+                color: Colors.blueAccent,
+              ),
               onPressed: () {},
             ),
             IconButton(
-                icon: Icon(Icons.bar_chart),
+                tooltip: "Biểu đồ thống kê",
+                icon: Icon(
+                  Icons.show_chart,
+                  color: Colors.blueAccent,
+                ),
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => GraphPage()));

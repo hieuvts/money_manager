@@ -504,10 +504,58 @@ class ChooseCategoryPage extends StatelessWidget {
                     FlatButton.icon(
                       color: Colors.white,
                       onPressed: () {
+                        _sendValueBack(context, 30);
+                      },
+                      icon: customImageFromAsset('images/salary.png'),
+                      label: Text("Lương                    "),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    FlatButton.icon(
+                      color: Colors.white,
+                      onPressed: () {
+                        _sendValueBack(context, 31);
+                      },
+                      icon: customImageFromAsset('images/gift.png'),
+                      label: Text("Quà tặng              "),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    FlatButton.icon(
+                      color: Colors.white,
+                      onPressed: () {
+                        _sendValueBack(context, 32);
+                      },
+                      icon: customImageFromAsset('images/selling.png'),
+                      label: Text("Bán hàng             "),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    FlatButton.icon(
+                      color: Colors.white,
+                      onPressed: () {
+                        _sendValueBack(context, 33);
+                      },
+                      icon: customImageFromAsset('images/atm.png'),
+                      label: Text("Rút tiền ngân hàng      "),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    FlatButton.icon(
+                      color: Colors.white,
+                      onPressed: () {
                         _sendValueBack(context, 20);
                       },
                       icon: customImageFromAsset('images/other.png'),
-                      label: Text("Khác"),
+                      label: Text("Khác               "),
                     ),
                   ],
                 ),

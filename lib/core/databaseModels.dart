@@ -15,6 +15,10 @@ class MMCategory {
     this.categoryName = obj['categoryName'];
     this.transactionAmount = obj['transactionAmount'];
   }
+  MMCategory.fromdAmount(dynamic obj) {
+    this.categoryId = obj['categoryId'];
+    this.transactionAmount = obj['transactionAmount'];
+  }
   int get getCategoryId => categoryId;
   String get getCategoryName => categoryName;
   String get getCategoryIcon => categoryIcon;

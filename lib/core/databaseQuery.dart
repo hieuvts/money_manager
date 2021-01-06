@@ -18,17 +18,32 @@ class QueryMMCategory {
     return list;
   }
 
-  var queryGetCategoryAmount = '''
+  var queryGetCategorySpendAmount = '''
   select MMCategory.categoryName, sum(MMTransaction.transactionAmount) as 'transactionAmount'from MMCategory, MMsubCategory, MMTransaction 
 where (MMCategory.categoryId=MMsubCategory.categoryIdFK and MMsubCategory.subCategoryId=MMTransaction.transactionSubCategoryId)
 GROUP BY MMCategory.categoryId
   ''';
-  Future<List<MMCategory>> getCategoryAmount() async {
+  Future<List<MMCategory>> getCategorySpendAmount() async {
     var dbClient = await con.db;
-    var res = await dbClient.rawQuery(queryGetCategoryAmount);
+    var res = await dbClient.rawQuery(queryGetCategorySpendAmount);
 
     List<MMCategory> list = res.isNotEmpty
         ? res.map((c) => MMCategory.fromIDandAmount(c)).toList()
+        : null;
+
+    return list;
+  }
+
+  var querySpendAmount = '''
+  select sum(MMTransaction.transactionAmount) as 'transactionAmount', MMCategory.categoryId from MMCategory, MMsubCategory, MMTransaction 
+where (MMCategory.categoryId=MMsubCategory.categoryIdFK and MMsubCategory.subCategoryId=MMTransaction.transactionSubCategoryId) GROUP by MMCategory.categoryId
+  ''';
+  Future<List<MMCategory>> getSpendAmount() async {
+    var dbClient = await con.db;
+    var res = await dbClient.rawQuery(querySpendAmount);
+
+    List<MMCategory> list = res.isNotEmpty
+        ? res.map((c) => MMCategory.fromdAmount(c)).toList()
         : null;
 
     return list;
@@ -91,7 +106,7 @@ class QueryMMTransaction {
   }
 
   Future<List<MMTransaction>> getAllTransactionIn(String date) async {
-    log('$date');
+    //log('$date');
     var dbClient = await con.db;
     var res = await dbClient.rawQuery(
         "select * from MMTransaction where transactionDate = '$date'");

@@ -60,6 +60,21 @@ String getSubCategoryIcon(int id) {
     case 20:
       return "images/other.png";
       break;
+    case 30:
+      return "images/salary.png";
+      break;
+    case 31:
+      return "images/gift.png";
+      break;
+    case 32:
+      return "images/selling.png";
+      break;
+    case 33:
+      return "images/atm.png";
+      break;
+    case 34:
+      return "images/other.png";
+      break;
     default:
       return "images/other.png";
   }

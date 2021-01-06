@@ -179,6 +179,7 @@ class _BuildFillTransactionFormState extends State<BuildFillTransactionForm> {
                     Fluttertoast.showToast(
                         msg: "Thêm giao dịch mới thành công",
                         toastLength: Toast.LENGTH_LONG);
+                    Navigator.pop(context, true);
                   },
                   icon: Icon(Icons.save, size: 40),
                   label: Text(

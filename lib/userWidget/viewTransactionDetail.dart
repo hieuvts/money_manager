@@ -62,7 +62,7 @@ class _ViewTransactionDetailState extends State<ViewTransactionDetail> {
                       Spacer(),
                       FlatButton(
                           onPressed: () async {
-                            await Navigator.push(
+                            final result = await Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => EditTransaction(
@@ -74,7 +74,9 @@ class _ViewTransactionDetailState extends State<ViewTransactionDetail> {
                                           transactionDate: transactionDate,
                                           transactionNote: transactionNote,
                                         )));
-                            this.setState(() {});
+                            if (result) {
+                              setState(() {});
+                            }
                           },
                           onLongPress: () {
                             _showToast('Chỉnh sửa giao dịch này');
@@ -85,7 +87,7 @@ class _ViewTransactionDetailState extends State<ViewTransactionDetail> {
                             print('Button Delete is pressed');
                             _deleteThisTransaction(transactionId);
                             _showToast('Xoá thành công');
-                            Navigator.pop(context);
+                            Navigator.pop(context, true);
                           },
                           child: Tooltip(
                               message: "Xoá giao dịch này",

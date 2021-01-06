@@ -25,10 +25,10 @@ class _RecentTransactionState extends State<RecentTransaction> {
   String transactionDate;
   String transactionNote;
   final transactionData = TransactionData.getData;
-  @override
-  void setState(fn) {
-    super.setState(fn);
-  }
+  // @override
+  // void setState(fn) {
+  //   super.setState(fn);
+  // }
 
   QueryMMTransaction _query = new QueryMMTransaction();
   @override
@@ -72,7 +72,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
                                                       buildDayOfTransaction(
                                                           snapshot.data[index]),
                                                       Spacer(
-                                                        flex: 1,
+                                                        flex: 2,
                                                       ),
                                                       Column(
                                                         crossAxisAlignment:
@@ -148,7 +148,6 @@ class _RecentTransactionState extends State<RecentTransaction> {
                                                                                 transactionDate,
                                                                                 transactionNote,
                                                                               );
-                                                                              print("Tapped");
                                                                             });
                                                                       }),
                                                             )
@@ -222,7 +221,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
       child: RichText(
         text: TextSpan(
           text: getSubCategoryName(data.transactionSubCategoryId),
-          style: TextStyle(color: Colors.black, fontSize: 19),
+          style: TextStyle(color: Colors.black, fontSize: 16),
         ),
       ),
     );
@@ -286,9 +285,9 @@ class _RecentTransactionState extends State<RecentTransaction> {
     var getDateTime = DateFormat("yyyy-MM-dd", "en_US").parse("2020-12-29");
     var _transactionDate = DateFormat.yMMMMd('vi_VN').format(getDateTime);
     transactionDate = _transactionDate;
-    log(data.transactionDate);
-    log(getDateTime.toString());
-    log(transactionDate);
+    // log(data.transactionDate);
+    // log(getDateTime.toString());
+    // log(transactionDate);
   }
 
   //Chờ lấy các giá trị từ màn hình "Chỉnh sửa thông tin giao dịch"

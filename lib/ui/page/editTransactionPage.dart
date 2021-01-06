@@ -186,9 +186,9 @@ class _EditTransactionState extends State<EditTransaction> {
                                 print('invoked');
                                 _updateTransaction();
                                 Fluttertoast.showToast(
-                                    msg: "Thêm giao dịch mới thành công",
+                                    msg: "Chỉnh sửa thành công",
                                     toastLength: Toast.LENGTH_LONG);
-                                Navigator.pop(context);
+                                Navigator.pop(context, true);
                                 setState(() {
                                   widget.transactionDate =
                                       DateFormat("dd-MM-yyyy", "vi_VN")
